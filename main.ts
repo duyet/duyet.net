@@ -23,8 +23,6 @@ const getLogger =
     };
 
     await kv.enqueue(payload);
-
-    console.log(...msg);
   };
 
 Deno.serve(async (req: Request, conn: Deno.ServeHandlerInfo) => {
@@ -33,7 +31,7 @@ Deno.serve(async (req: Request, conn: Deno.ServeHandlerInfo) => {
   const slug = "/" + (req.url.split("/").pop() || "");
   const url = getUrl(slug);
 
-  await logger(slug, "==> redirecting to", url);
+  await logger(req.url, "==> redirecting to", url);
 
   return Response.redirect(url, 301);
 });
