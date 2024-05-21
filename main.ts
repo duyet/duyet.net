@@ -1,14 +1,6 @@
-function getUrl(slug: string): string {
-  const urls: Record<string, string> = {
-    "/": "https://blog.duyet.net",
-    "/blog": "https://blog.duyet.net",
-    "/about": "https://blog.duyet.net/about",
-    "/i": "https://insights.duyet.net",
-    "/clickhouse": "https://blog.duyet.net/tag/clickhouse",
-    "/tiktok": "https://www.tiktok.com/@duyet.net",
-    "/x": "https://x.com/_duyet",
-  };
+import { urls } from "./urls.ts";
 
+function getUrl(slug: string): string {
   return urls[slug] || urls["/"];
 }
 
