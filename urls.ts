@@ -6,4 +6,5 @@ export const urls: Record<string, string> = {
   "/clickhouse": "https://blog.duyet.net/tag/clickhouse",
   "/tiktok": "https://www.tiktok.com/@duyet.net",
   "/x": "https://x.com/_duyet",
+  "/ni": "https://www.tiktok.com/@niniluungan",
 };
