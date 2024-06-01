@@ -14,7 +14,9 @@ const getClickHouse = () => {
     !Deno.env.get("CLICKHOUSE_USER") ||
     !Deno.env.get("CLICKHOUSE_PASSWORD")
   ) {
-    throw new Error("Missing CLICKHOUSE_URL, CLICKHOUSE_USER or CLICKHOUSE_PASSWORD");
+    throw new Error(
+      "Missing CLICKHOUSE_URL, CLICKHOUSE_USER or CLICKHOUSE_PASSWORD",
+    );
   }
 
   return {
@@ -67,8 +69,17 @@ Deno.serve(async (req: Request, conn: Deno.ServeHandlerInfo) => {
   const logger = getLogger(req, conn);
 
   const slug = "/" + (req.url.split("/").pop() || "");
-  const url = getUrl(slug);
 
+  if (slug === "/ping") {
+    return new Response("pong");
+  }
+
+  if (slug === "/favicon.ico") {
+    return new Response(null, { status: 404 });
+  }
+
+  // Redirect to the target URL
+  const url = getUrl(slug);
   await logger(req.url, "==> redirecting to", url);
 
   return Response.redirect(url, 301);
