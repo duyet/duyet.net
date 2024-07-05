@@ -11,4 +11,5 @@ export const urls: Record<string, string> = {
   "/ni": "https://www.tiktok.com/@niniluungan",
   "/numi": "https://numi.app",
   "/ch": "https://blog.duyet.net/series/clickhouse?utm_source=duyet.net&utm_medium=linkedin&utm_campaign=duyet.net",
+  "/mo": "https://monica.im/invitation?c=RJF8T7RT",
 };
