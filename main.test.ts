@@ -1,12 +1,17 @@
-import { assertEquals } from "jsr:@std/assert";
+import {
+  assertEquals,
+  assertExists,
+  assertGreaterOrEqual,
+} from "jsr:@std/assert";
 import { urls } from "./urls.ts";
 import { handler, initKv } from "./main.ts";
-import { assertGreaterOrEqual } from "jsr:@std/assert/assert-greater-or-equal";
 
 Deno.test("e2e", async (t) => {
   const ac = new AbortController();
   const kv = await initKv(":memory:");
   const testHandler = handler(kv);
+
+  assertExists(kv);
 
   const server = Deno.serve({
     async onListen(e) {
