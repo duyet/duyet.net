@@ -34,5 +34,19 @@ jobs:
       - name: Deno Fmt Check
         run: deno fmt --check
 
+      - name: Deno Lint
+        run: deno lint
+
       - name: Deno Test
-        run: deno test
+        run: deno test --allow-all --coverage=cov/
+
+      # This generates a report from the collected coverage in `deno test --coverage`. It is
+      # stored as a .lcov file which integrates well with services such as Codecov, Coveralls and Travis CI.
+      - name: Coverage Report
+        run: deno coverage --lcov cov/ > cov.lcov
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./cov.lcov
