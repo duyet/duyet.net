@@ -4,6 +4,14 @@ export const getUrl = (slug: string): string => {
   return urls[slug] || urls["/"];
 };
 
+export const getSlug = (url: string): string => {
+  if (!url || url === "/" || url.startsWith("/?")) return "/";
+  const parts = url.split("/").filter(Boolean);
+  if (parts.length === 0) return "/";
+  const lastPart = parts[parts.length - 1];
+  return "/" + lastPart.split("?")[0];
+};
+
 export const getClickHouse = (): {
   url: string;
   headers: Record<string, string>;

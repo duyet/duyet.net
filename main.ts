@@ -1,5 +1,6 @@
 import { UserAgent } from "./deps.ts";
-import { getClickHouse, getLogger, getUrl } from "./libs.ts";
+import { getClickHouse, getLogger, getSlug, getUrl } from "./libs.ts";
+import { urls } from "./urls.ts";
 
 const kv = await Deno.openKv();
 
@@ -26,15 +27,18 @@ kv.listenQueue(async (msg) => {
 
 Deno.serve(async (req: Request, conn: Deno.ServeHandlerInfo) => {
   const logger = getLogger(req, conn, kv);
+  const slug = getSlug(req.url);
 
-  const slug = "/" + (req.url.split("/").pop() || "");
-
-  if (slug === "/ping") {
+  if (slug === "/ping" || slug === "/health") {
     return new Response("pong");
   }
 
   if (slug === "/favicon.ico") {
     return new Response(null, { status: 404 });
+  }
+
+  if (slug === "/_ls") {
+    return new Response(JSON.stringify(urls));
   }
 
   // Redirect to the target URL
