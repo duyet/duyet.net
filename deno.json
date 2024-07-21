@@ -6,5 +6,9 @@
     ],
     "include": [],
     "entrypoint": "main.ts"
+  },
+  "tasks": {
+    "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
+    "hooks:pre-commit": "deno check *.ts && deno fmt && deno lint"
   }
 }
