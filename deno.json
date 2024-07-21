@@ -8,7 +8,8 @@
     "entrypoint": "main.ts"
   },
   "tasks": {
-    "test": "deno test --allow-all --unstable-kv --coverage=cov/",
+    "test": "deno test --allow-all --unstable-kv",
+    "test:coverage": "deno test --allow-all --unstable-kv --coverage=cov/ && deno coverage --lcov cov/ > cov.lcov",
     "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
     "hooks:pre-commit": "deno check *.ts && deno fmt && deno lint && deno test --allow-all --unstable-kv --coverage=cov/"
   }
