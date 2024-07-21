@@ -1,32 +1,7 @@
-import { UserAgent } from "https://deno.land/std@0.224.0/http/user_agent.ts";
-
-import { urls } from "./urls.ts";
-
-function getUrl(slug: string): string {
-  return urls[slug] || urls["/"];
-}
+import { UserAgent } from "./deps.ts";
+import { getClickHouse, getLogger, getUrl } from "./libs.ts";
 
 const kv = await Deno.openKv();
-
-const getClickHouse = () => {
-  if (
-    !Deno.env.get("CLICKHOUSE_URL") ||
-    !Deno.env.get("CLICKHOUSE_USER") ||
-    !Deno.env.get("CLICKHOUSE_PASSWORD")
-  ) {
-    throw new Error(
-      "Missing CLICKHOUSE_URL, CLICKHOUSE_USER or CLICKHOUSE_PASSWORD",
-    );
-  }
-
-  return {
-    url: Deno.env.get("CLICKHOUSE_URL"),
-    headers: {
-      "X-ClickHouse-User": Deno.env.get("CLICKHOUSE_USER"),
-      "X-ClickHouse-Key": Deno.env.get("CLICKHOUSE_PASSWORD"),
-    },
-  };
-};
 
 // Create a queue listener that will process enqueued messages
 kv.listenQueue(async (msg) => {
@@ -49,24 +24,8 @@ kv.listenQueue(async (msg) => {
   console.log("Clickhouse response:", await resp.text());
 });
 
-const getLogger =
-  (req: Request, conn: Deno.ServeHandlerInfo) => async (...msg: string) => {
-    const method = req.method;
-    const ip = conn.remoteAddr.hostname;
-    const ua = req.headers.get("user-agent");
-
-    const payload = {
-      method,
-      ip,
-      ua,
-      msg,
-    };
-
-    await kv.enqueue(payload);
-  };
-
 Deno.serve(async (req: Request, conn: Deno.ServeHandlerInfo) => {
-  const logger = getLogger(req, conn);
+  const logger = getLogger(req, conn, kv);
 
   const slug = "/" + (req.url.split("/").pop() || "");
 
