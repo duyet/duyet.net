@@ -5,11 +5,15 @@ export const getUrl = (slug: string): string => {
 };
 
 export const getSlug = (url: string): string => {
-  if (!url || url === "/" || url.startsWith("/?")) return "/";
-  const parts = url.split("/").filter(Boolean);
-  if (parts.length === 0) return "/";
-  const lastPart = parts[parts.length - 1];
-  return "/" + lastPart.split("?")[0];
+  try {
+    const normalizedUrl = ("" + url).replace(/^\/+/, ""); // Remove leading slashe
+    const parsedUrl = new URL(normalizedUrl, "http://localhost"); // Use localhost as the base for relative URLs
+    const pathname = parsedUrl.pathname;
+    // Return the pathname, ensuring it starts with a single slash and handles empty paths correctly
+    return pathname === "/" ? "/" : pathname.replace(/\/+$/, ""); // Return "/" for empty path
+  } catch {
+    return "/"; // Return root if URL parsing fails
+  }
 };
 
 export const getClickHouse = (): {

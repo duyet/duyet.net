@@ -19,13 +19,16 @@ Deno.test("getSlug should return valid value", () => {
   assertEquals(getSlug("//abc"), "/abc");
   assertEquals(getSlug("//abc"), "/abc");
   assertEquals(getSlug("//abc//"), "/abc");
-  assertEquals(getSlug("/a/b/"), "/b");
+  assertEquals(getSlug("/a/b"), "/a/b");
+  assertEquals(getSlug("/a/b/"), "/a/b");
+  assertEquals(getSlug("/a/b/c"), "/a/b/c");
 });
 
 Deno.test("getSlug should return valid with params", () => {
   assertEquals(getSlug("?"), "/");
   assertEquals(getSlug("/?"), "/");
   assertEquals(getSlug("/?a=b"), "/");
+  assertEquals(getSlug("/abc?a=b"), "/abc");
 });
 
 Deno.test("getClickHouse", () => {
