@@ -50,7 +50,14 @@ export const handler =
     const url = getUrl(slug);
     await logger(req.url, "==> redirecting to", url);
 
-    return Response.redirect(url, 301);
+    // Forwards the parameters to the target URL
+    const targetUrl = new URL(url);
+    const params = new URL(req.url).searchParams;
+    for (const [key, value] of params) {
+      targetUrl.searchParams.append(key, value);
+    }
+
+    return Response.redirect(targetUrl, 301);
   };
 
 Deno.serve(handler(await initKv()));
