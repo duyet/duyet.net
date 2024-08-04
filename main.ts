@@ -33,6 +33,7 @@ export const handler =
   (kv: Deno.Kv) => async (req: Request, conn: Deno.ServeHandlerInfo) => {
     const logger = getLogger(req, conn, kv);
     const slug = getSlug(req.url);
+    await logger(req.url, "==> ", slug);
 
     if (slug === "/ping" || slug === "/health") {
       return new Response("pong");
@@ -48,7 +49,7 @@ export const handler =
 
     // Redirect to the target URL
     const url = getUrl(slug);
-    await logger(req.url, "==> redirecting to", url);
+    await logger(slug, "==> redirecting to", url);
 
     // Forwards the parameters to the target URL
     const targetUrl = new URL(url);
