@@ -43,6 +43,10 @@ export const handler =
       return new Response(null, { status: 404 });
     }
 
+    if (slug === "/ads.txt") {
+      return new Response("google.com, pub-4044047400859099, DIRECT, f08c47fec0942fa0");
+    }
+
     if (slug === "/_ls") {
       return new Response(JSON.stringify(urls));
     }
