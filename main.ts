@@ -1,5 +1,5 @@
 import { UserAgent } from "./deps.ts";
-import { getClickHouse, getLogger, getSlug, getUrl } from "./libs.ts";
+import { getClickHouse, getLogger, getSlug, getStats, getUrl } from "./libs.ts";
 import { urls } from "./urls.ts";
 
 export const initKv = async (path?: string) => {
@@ -61,6 +61,10 @@ export const handler =
 
     if (slug === "/_ls") {
       return new Response(JSON.stringify(urls));
+    }
+
+    if (slug === "/_stats") {
+      return new Response(JSON.stringify(await getStats()));
     }
 
     // Redirect to the target URL

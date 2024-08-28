@@ -73,26 +73,32 @@ Deno.test("getLogger", async () => {
 });
 
 Deno.test("isBot", () => {
-  assert(isBot("Googlebot"));
-  assert(
-    isBot(
-      "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-    ),
-  );
-  assert(
-    isBot(
-      "Ada Chat Bot/1.0 Request Block",
-    ),
-  );
-  assert(
-    isBot(
-      "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
-    ),
-  );
+  const botUA = [
+    "Googlebot",
+    "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+    "Ada Chat Bot/1.0 Request Block",
+    "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+    "Mozilla/5.0+(compatible; UptimeRobot/2.0; http://www.uptimerobot.com/)",
+  ];
+
+  for (const ua of botUA) {
+    assert(isBot(ua));
+  }
 
   assert(
     false === isBot(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91 Safari/537.36",
     ),
   );
+});
+
+Deno.test("not isBot", () => {
+  const botUA = [
+    "",
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91 Safari/537.36",
+  ];
+
+  for (const ua of botUA) {
+    assert(false === isBot(ua));
+  }
 });
