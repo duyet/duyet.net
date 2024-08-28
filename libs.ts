@@ -55,10 +55,16 @@ export const getLogger =
 
     console.log(payload);
 
-    if (ua?.includes("Googlebot") || ua?.includes("UptimeRobot")) {
+    if (isBot(ua)) {
       console.log("Skipping bot request");
       return;
     }
 
     await kv.enqueue(payload);
   };
+
+export const isBot = (ua?: string | null): boolean => {
+  const pattern = /bot|crawl|http|lighthouse|scan|search|spider/i;
+
+  return Boolean(ua) && pattern.test(ua || "");
+};

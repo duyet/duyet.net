@@ -1,5 +1,6 @@
 import { getSlug, getUrl } from "./libs.ts";
 import { getClickHouse, getLogger } from "./libs.ts";
+import { isBot } from "./libs.ts";
 import { assert, assertEquals, assertThrows } from "jsr:@std/assert";
 import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
 
@@ -69,4 +70,29 @@ Deno.test("getLogger", async () => {
   await logger("test message");
 
   assertSpyCalls(mockKv.enqueue, 1);
+});
+
+Deno.test("isBot", () => {
+  assert(isBot("Googlebot"));
+  assert(
+    isBot(
+      "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+    ),
+  );
+  assert(
+    isBot(
+      "Ada Chat Bot/1.0 Request Block",
+    ),
+  );
+  assert(
+    isBot(
+      "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",
+    ),
+  );
+
+  assert(
+    false === isBot(
+      "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91 Safari/537.36",
+    ),
+  );
 });
