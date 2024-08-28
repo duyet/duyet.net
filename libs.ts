@@ -53,5 +53,6 @@ export const getLogger =
       msg,
     };
 
+    console.log(payload);
     await kv.enqueue(payload);
   };

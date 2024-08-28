@@ -15,15 +15,19 @@ export const initKv = async (path?: string) => {
     const target = msg.msg[2];
 
     const clickhouse = getClickHouse();
-    const resp = await fetch(clickhouse.url, {
-      method: "POST",
-      headers: clickhouse.headers,
-      body:
-        `INSERT INTO duyet_analytics.duyet_redirect (source, target, ip, user_agent, browser, os_name, os_version, device_type)
-       VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${ua.browser.name}', '${ua.os.name}', '${ua.os.version}', '${ua.device.type}')`,
-    });
 
-    console.log("Clickhouse response:", await resp.text());
+    try {
+      const resp = await fetch(clickhouse.url, {
+        method: "POST",
+        headers: clickhouse.headers,
+        body:
+          `INSERT INTO duyet_analytics.duyet_redirect (source, target, ip, user_agent, browser, os_name, os_version, device_type)
+         VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${ua.browser.name}', '${ua.os.name}', '${ua.os.version}', '${ua.device.type}')`,
+      });
+      console.log("Clickhouse response:", await resp.text());
+    } catch (e) {
+      console.error("Clickhouse error:", e);
+    }
   });
 
   return kv;
@@ -44,7 +48,9 @@ export const handler =
     }
 
     if (slug === "/ads.txt") {
-      return new Response("google.com, pub-4044047400859099, DIRECT, f08c47fec0942fa0");
+      return new Response(
+        "google.com, pub-4044047400859099, DIRECT, f08c47fec0942fa0",
+      );
     }
 
     if (slug === "/_ls") {
