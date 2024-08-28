@@ -54,5 +54,11 @@ export const getLogger =
     };
 
     console.log(payload);
+
+    if (ua?.includes("Googlebot") || ua?.includes("UptimeRobot")) {
+      console.log("Skipping bot request");
+      return;
+    }
+
     await kv.enqueue(payload);
   };
