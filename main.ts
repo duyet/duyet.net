@@ -25,9 +25,9 @@ export const initKv = async (path?: string) => {
            Format JSON`,
       });
       const json = await resp.json();
-      console.log(`Inserted logs to ClickHouse: ${json}, msg:`, msg);
+      console.log("Inserted logs to ClickHouse: ", json, ", msg:", msg);
     } catch (e) {
-      console.error(`Clickhouse error: ${e}, msg:`, msg);
+      console.error("Clickhouse error:", e, ", msg:", msg);
     }
   });
 
