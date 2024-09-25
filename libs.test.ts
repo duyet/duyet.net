@@ -75,6 +75,7 @@ Deno.test("getLogger", async () => {
 Deno.test("isBot", () => {
   const botUA = [
     "Googlebot",
+    "upptime.js.org",
     "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
     "Ada Chat Bot/1.0 Request Block",
     "Mozilla/5.0 (compatible; Yahoo! Slurp; http://help.yahoo.com/help/us/ysearch/slurp)",

@@ -83,7 +83,7 @@ export const getLogger =
   };
 
 export const isBot = (ua?: string | null): boolean => {
-  const pattern = /bot|crawl|http|lighthouse|scan|search|spider/i;
+  const pattern = /bot|crawl|http|lighthouse|scan|search|spider|upptime/i;
 
   return Boolean(ua) && pattern.test(ua || "");
 };
