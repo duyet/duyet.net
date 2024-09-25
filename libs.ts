@@ -73,8 +73,6 @@ export const getLogger =
       msg,
     };
 
-    console.log(payload);
-
     if (isBot(ua)) {
       console.log("Bot detected, skip logging to ClickHouse", ua);
       return;
