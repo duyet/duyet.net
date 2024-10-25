@@ -1,4 +1,18 @@
-node_modules/
-.env
+.DS_Store
+.vscode
+
+# Code Coverage
 cov/
 *.lcov
+
+# dotenv environment variable files
+.env
+.env.development.local
+.env.test.local
+.env.production.local
+.env.local
+
+# Fresh build directory
+_fresh/
+# npm dependencies
+node_modules/
