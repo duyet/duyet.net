@@ -1,7 +1,7 @@
 import { FreshContext, Handlers, type PageProps } from "$fresh/server.ts";
 import { type Data, getStats } from "@/libs/get_stats.ts";
 import { Head } from "$fresh/runtime.ts";
-import { Chart } from "https://deno.land/x/fresh_charts@0.3.1/mod.ts";
+import { Chart } from "@/islands/Chart.tsx";
 import { ChartColors } from "https://deno.land/x/fresh_charts@0.3.1/utils.ts";
 
 export const handler: Handlers<Data> = {
@@ -37,15 +37,15 @@ export default function Page(props: PageProps<Data>) {
   return (
     <>
       <Head>
-        <title>Example Chart</title>
+        <title>Redirection Stats</title>
       </Head>
-      <div class="flex flex-col gap-4 p-8 mx-auto max-w-screen-md">
+      <div class="flex flex-col gap-4 p-8 mx-auto max-w-screen-lg">
         <h1 className="text-center">Redirection Stats</h1>
         <Chart
           type="bar"
-          height={800}
           options={{
             indexAxis: "y",
+            responsive: true,
             plugins: {
               legend: {
                 position: "right",
