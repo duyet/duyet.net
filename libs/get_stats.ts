@@ -1,21 +1,29 @@
 import { getClickHouse } from "./utils.ts";
 
-export const getStats = async () => {
-  const clickhouse = getClickHouse();
+export interface Data {
+  meta: Array<Record<string, string>>;
+  data: Array<{ source: string; count: string }>;
+}
 
-  const resp = await fetch(clickhouse.url, {
+export const getStats = async (): Promise<Data> => {
+  const ch = getClickHouse();
+  console.log(ch);
+
+  const resp = await fetch(ch.url, {
     method: "POST",
-    headers: clickhouse.headers,
+    headers: ch.headers,
     body: `SELECT
-                 source,
-                 count()
-             FROM duyet_analytics.duyet_redirect
-             GROUP BY 1
-             ORDER BY 2 DESC
-             LIMIT 50
-             Format JSON`,
+               source,
+               count() as count
+           FROM duyet_analytics.duyet_redirect
+           GROUP BY 1
+           ORDER BY 2 DESC
+           LIMIT 50
+           Format JSON`,
   });
 
   const text = await resp.text();
+  console.log("text", text);
+
   return JSON.parse(text) || [];
 };

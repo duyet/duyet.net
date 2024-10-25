@@ -1,6 +1,6 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
 import { db } from "../../libs/db.ts";
-import { getLogger, getSlug, getUrl } from "../../libs/utils.ts";
+import { getLogger, getSlug, getUrl } from "@/libs/utils.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: FreshContext) {
