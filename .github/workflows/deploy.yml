@@ -5,6 +5,11 @@ on:
   pull_request:
     branches: main
 
+env:
+  CLICKHOUSE_URL: http://clickhouse.duyet.net:8123
+  CLICKHOUSE_USER: duyet
+  CLICKHOUSE_PASSWORD: ${{ secrets.CLICKHOUSE_PASSWORD }}
+
 jobs:
   deploy:
     name: Deploy
