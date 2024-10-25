@@ -32,5 +32,3 @@ jobs:
           project: "duyet"
           entrypoint: "main.ts"
           root: "."
-          
-          

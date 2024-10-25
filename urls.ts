@@ -1,5 +1,5 @@
 export const urls: Record<string, string> = {
-  "/": "https://blog.duyet.net",
+  "/": "https://duyet.net",
   "/blog": "https://blog.duyet.net",
   "/cv": "https://cv.duyet.net",
   "/about": "https://blog.duyet.net/about",

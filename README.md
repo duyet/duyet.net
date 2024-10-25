@@ -6,16 +6,14 @@ corresponding URLs.
 The application maps predefined slugs to specific URLs and performs HTTP 301
 redirects.
 
-## Local Development
+## Usage
 
-To run the application locally, use the following command:
+Make sure to install Deno: https://deno.land/manual/getting_started/installation
 
-```bash
-deno run --allow-net --unstable-kv --watch main.ts
+Then start the project:
+
+```
+deno task start
 ```
 
-## Deployment
-
-```bash
-deployctl deploy
-```
+This will watch the project directory and restart as necessary.

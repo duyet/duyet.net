@@ -1,6 +1,7 @@
-import { getSlug, getUrl } from "./libs.ts";
-import { getClickHouse, getLogger } from "./libs.ts";
-import { isBot } from "./libs.ts";
+import type { FreshContext } from "$fresh/server.ts";
+import { getSlug, getUrl } from "./utils.ts";
+import { getClickHouse, getLogger } from "./utils.ts";
+import { isBot } from "./utils.ts";
 import { assert, assertEquals, assertThrows } from "jsr:@std/assert";
 import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
 
@@ -59,12 +60,12 @@ Deno.test("getClickHouse", () => {
 
 Deno.test("getLogger", async () => {
   const mockRequest = new Request("https://example.com");
-  const mockConn = { remoteAddr: { hostname: "127.0.0.1" } };
+  const mockCtx = { remoteAddr: { hostname: "127.0.0.1" } };
   const mockKv = { enqueue: spy(async () => {}) };
 
   const logger = getLogger(
     mockRequest as Request,
-    mockConn as Deno.ServeHandlerInfo,
+    mockCtx as FreshContext,
     mockKv as unknown as Deno.Kv,
   );
   await logger("test message");

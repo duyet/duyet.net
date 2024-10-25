@@ -1,4 +1,4 @@
-name: Deno Test
+name: Deno Lint Test
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
 
 jobs:
   deploy:
-    name: Test
+    name: Lint Test
     runs-on: ubuntu-latest
 
     permissions:
@@ -24,12 +24,12 @@ jobs:
           path: |
             ~/.deno
             ~/.cache/deno
-          key: ${{ runner.os }}-deno-${{ hashFiles('**/deps.ts') }}
+          key: ${{ runner.os }}-deno-${{ hashFiles('**/deno.json') }}
 
       - name: Install Deno
         uses: denoland/setup-deno@v1
         with:
-          deno-version: v1.x
+          deno-version: v2.x
 
       - name: Deno Fmt Check
         run: deno fmt --check

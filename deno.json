@@ -1,4 +1,47 @@
 {
+  "lock": false,
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno check **/*.ts && deno check **/*.tsx",
+    "cli": "echo \"import '\\$fresh/src/dev/cli.ts'\" | deno run --unstable -A -",
+    "manifest": "deno task cli manifest $(pwd)",
+    "start": "deno run -A --unstable-kv --watch=static/,routes/ dev.ts",
+    "debug": "deno run -A --unstable-kv --inspect --watch=static/,routes/ dev.ts",
+    "build": "deno run -A --unstable-kv dev.ts build",
+    "preview": "deno run -A --unstable-kv main.ts",
+    "update": "deno run -A -r https://fresh.deno.dev/update .",
+    "test": "deno test --allow-all --unstable-kv",
+    "test:coverage": "deno test --allow-all --unstable-kv --coverage=cov/ && deno coverage --lcov cov/ > cov.lcov",
+    "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
+    "hooks:pre-commit": "deno check *.ts && deno fmt && deno lint && deno test --allow-all --unstable-kv --coverage=cov/"
+  },
+  "lint": {
+    "rules": {
+      "tags": [
+        "fresh",
+        "recommended"
+      ]
+    }
+  },
+  "exclude": [
+    "**/_fresh/*"
+  ],
+  "imports": {
+    "$fresh/": "https://deno.land/x/fresh@1.7.3/",
+    "preact": "https://esm.sh/preact@10.22.0",
+    "preact/": "https://esm.sh/preact@10.22.0/",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "tailwindcss": "npm:tailwindcss@3.4.1",
+    "tailwindcss/": "npm:/tailwindcss@3.4.1/",
+    "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
+    "std/": "https://deno.land/std@0.216.0/",
+    "user_agent": "https://deno.land/std@0.224.0/http/user_agent.ts"
+  },
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact"
+  },
+  "nodeModulesDir": "auto",
   "deploy": {
     "project": "f8774b17-2661-4164-a3de-8bc09b219374",
     "exclude": [
@@ -6,11 +49,5 @@
     ],
     "include": [],
     "entrypoint": "main.ts"
-  },
-  "tasks": {
-    "test": "deno test --allow-all --unstable-kv",
-    "test:coverage": "deno test --allow-all --unstable-kv --coverage=cov/ && deno coverage --lcov cov/ > cov.lcov",
-    "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
-    "hooks:pre-commit": "deno check *.ts && deno fmt && deno lint && deno test --allow-all --unstable-kv --coverage=cov/"
   }
 }
