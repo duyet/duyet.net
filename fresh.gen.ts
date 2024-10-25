@@ -12,7 +12,7 @@ import * as $index from "./routes/index.tsx";
 import * as $ls from "./routes/ls.ts";
 import * as $ping from "./routes/ping.ts";
 import * as $robots_txt from "./routes/robots.txt.ts";
-import * as $stats_index from "./routes/stats/index.ts";
+import * as $stats_index from "./routes/stats/index.tsx";
 import * as $Counter from "./islands/Counter.tsx";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -28,7 +28,7 @@ const manifest = {
     "./routes/ls.ts": $ls,
     "./routes/ping.ts": $ping,
     "./routes/robots.txt.ts": $robots_txt,
-    "./routes/stats/index.ts": $stats_index,
+    "./routes/stats/index.tsx": $stats_index,
   },
   islands: {
     "./islands/Counter.tsx": $Counter,
