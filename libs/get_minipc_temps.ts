@@ -25,7 +25,6 @@ export const getTemps = async (): Promise<Required<Data>> => {
       GROUP BY 1
       ORDER BY 1 DESC
       Format JSON`;
-  console.log(query);
 
   const resp = await fetch(ch.url, {
     method: "POST",
@@ -34,6 +33,7 @@ export const getTemps = async (): Promise<Required<Data>> => {
   });
 
   const text = await resp.text();
+  console.log(query, text);
 
   return JSON.parse(text) || [];
 };

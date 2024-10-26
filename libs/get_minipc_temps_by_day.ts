@@ -23,7 +23,6 @@ export const getTempByDay = async (sensor: string): Promise<Data> => {
     GROUP BY 1, 2
     ORDER BY 1 DESC, 2 ASC WITH FILL
     Format JSON`;
-  console.log(query);
 
   const resp = await fetch(ch.url, {
     method: "POST",
@@ -32,6 +31,7 @@ export const getTempByDay = async (sensor: string): Promise<Data> => {
   });
 
   const text = await resp.text();
+  console.log(query, text);
 
   return JSON.parse(text) || [];
 };

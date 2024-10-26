@@ -7,10 +7,14 @@ interface Message {
 }
 
 export default function Error404(props: PageProps<Message>) {
+  const title = props.data.title || "404 - Page not found";
+  const message = props.data.message ||
+    "The page you were looking for doesn't exist.";
+
   return (
     <>
       <Head>
-        <title>404 - Page not found</title>
+        <title>{title}</title>
       </Head>
       <div class="flex min-h-screen px-4 py-8 mx-auto bg-[#86efac]">
         <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
@@ -19,14 +23,13 @@ export default function Error404(props: PageProps<Message>) {
             src="/logo.svg"
             width="128"
             height="128"
-            alt="the Fresh logo: a sliced lemon dripping with juice"
+            alt="the logo"
           />
           <h1 class="text-4xl font-bold">
-            {props.data.title || "404 - Page not found"}
+            {title}
           </h1>
           <p class="my-4">
-            {props.data.message ||
-              "The page you were looking for doesn't exist."}
+            {message}
           </p>
           <a href="/" class="underline">Go back home</a>
         </div>
