@@ -6,8 +6,8 @@ on:
     branches: main
 
 env:
-  CLICKHOUSE_URL: https://clickhouse.duyet.net
-  CLICKHOUSE_USER: duyet
+  CLICKHOUSE_URL: ${{ vars.CLICKHOUSE_URL }}
+  CLICKHOUSE_USER: ${{ vars.CLICKHOUSE_USER }}
   CLICKHOUSE_PASSWORD: ${{ secrets.CLICKHOUSE_PASSWORD }}
 
 jobs:
