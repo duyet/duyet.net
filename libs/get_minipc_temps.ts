@@ -24,6 +24,9 @@ export const getTemps = async (): Promise<Required<Data>> => {
       WHERE (toDateTime(created_at) >= toDateTime(now() - toIntervalDay(7))) AND (toDateTime(created_at) <= toDateTime(now()))
       GROUP BY 1
       ORDER BY 1 DESC
+      SETTINGS use_query_cache = 1,
+        query_cache_nondeterministic_function_handling = 'save',
+        query_cache_ttl = 3600
       Format JSON`;
 
   const resp = await fetch(ch.url, {

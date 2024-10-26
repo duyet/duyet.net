@@ -22,6 +22,9 @@ export const getTempByDay = async (sensor: string): Promise<Data> => {
     WHERE (toDateTime(created_at) >= toStartOfDay(now() - toIntervalDay(7)))
     GROUP BY 1, 2
     ORDER BY 1 DESC, 2 ASC WITH FILL
+    SETTINGS use_query_cache = 1,
+      query_cache_nondeterministic_function_handling = 'save',
+      query_cache_ttl = 3600
     Format JSON`;
 
   const resp = await fetch(ch.url, {
