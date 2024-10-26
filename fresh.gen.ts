@@ -13,7 +13,8 @@ import * as $mini_index from "./routes/mini/index.tsx";
 import * as $ping from "./routes/ping.ts";
 import * as $robots_txt from "./routes/robots.txt.ts";
 import * as $stats_index from "./routes/stats/index.tsx";
-import * as $Chart from "./islands/Chart.tsx";
+import * as $EChart from "./islands/EChart.tsx";
+import * as $theme from "./islands/theme.ts";
 import type { Manifest } from "$fresh/server.ts";
 
 const manifest = {
@@ -31,7 +32,8 @@ const manifest = {
     "./routes/stats/index.tsx": $stats_index,
   },
   islands: {
-    "./islands/Chart.tsx": $Chart,
+    "./islands/EChart.tsx": $EChart,
+    "./islands/theme.ts": $theme,
   },
   baseUrl: import.meta.url,
 } satisfies Manifest;

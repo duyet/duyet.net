@@ -12,7 +12,7 @@
     "test": "deno test --allow-all --unstable-kv",
     "test:coverage": "deno test --allow-all --unstable-kv --coverage=cov/ && deno coverage --lcov cov/ > cov.lcov",
     "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
-    "hooks:pre-commit": "deno check *.ts && deno fmt && deno lint && deno test --allow-all --unstable-kv --coverage=cov/"
+    "hooks:pre-commit": "deno fmt && deno lint && deno task test:coverage"
   },
   "lint": {
     "rules": {
@@ -28,6 +28,7 @@
   "imports": {
     "@/libs/": "./libs/",
     "@/islands/": "./islands/",
+    "@/components/": "./components/",
     "$fresh/": "https://deno.land/x/fresh@1.7.3/",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",
