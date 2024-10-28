@@ -1,8 +1,9 @@
 import { EChart } from "@/islands/EChart.tsx";
-import { type Data } from "@/libs/get_minipc_temps_by_day.ts";
+import { type TempByDay } from "@/libs/get_minipc_temps_by_day.ts";
+import type { ClickHouseResponse } from "@/libs/clickhouse.ts";
 
 export function WattHeatmapChart(
-  { watts, title }: { watts: Data; title: string },
+  { watts, title }: { watts: ClickHouseResponse<TempByDay>; title: string },
 ) {
   const { data } = watts;
 
@@ -16,14 +17,14 @@ export function WattHeatmapChart(
         j,
         parseFloat(
           (data.find((row) => row.day === day && row.hour === hour)
-            ?.value || 0.0).toFixed(2),
+            ?.value || 0.0).toFixed(1),
         ) ||
         "-",
       ];
     })
   );
 
-  const values = data.map((row) => parseFloat(row.value.toFixed(2)));
+  const values = data.map((row) => parseFloat(row.value.toFixed(1)));
   const minValue = Math.min(...values);
   const maxValue = Math.max(...values);
 

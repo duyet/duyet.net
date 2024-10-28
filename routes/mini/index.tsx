@@ -1,30 +1,38 @@
 import { FreshContext, Handlers, type PageProps } from "$fresh/server.ts";
 import { Head } from "$fresh/runtime.ts";
-import { type Data as TempData } from "@/libs/get_minipc_temps.ts";
-import { type Data as TempByDayData } from "@/libs/get_minipc_temps_by_day.ts";
-import { type Data as WattByDayData } from "@/libs/get_minipc_watts.ts";
-import { getTemps } from "@/libs/get_minipc_temps.ts";
-import { getTempByDay } from "@/libs/get_minipc_temps_by_day.ts";
-import { getWatts } from "@/libs/get_minipc_watts.ts";
+
+import { query as tempQuery, type Temp } from "@/libs/get_minipc_temp.ts";
+import {
+  query as tempByDayQuery,
+  type TempByDay,
+} from "@/libs/get_minipc_temps_by_day.ts";
+import { query as wattQuery, type WattByDay } from "@/libs/get_minipc_watt.ts";
 import { TempChart } from "@/components/TempChart.tsx";
 import { TempHeatmapChart } from "@/components/TempHeatmapChart.tsx";
 import { WattHeatmapChart } from "@/components/WattHeatmapChart.tsx";
+import { clickhouseQuery, type ClickHouseResponse } from "@/libs/clickhouse.ts";
 
 interface Data {
-  temp: TempData;
-  tempByDay: TempByDayData;
-  wattByDay: WattByDayData;
+  temp: ClickHouseResponse<Temp>;
+  tempByDay: ClickHouseResponse<TempByDay>;
+  wattByDay: ClickHouseResponse<WattByDay>;
 }
 
 export const handler: Handlers<Data> = {
   async GET(_req: Request, ctx: FreshContext) {
-    let temp: TempData;
-    let tempByDay: TempByDayData;
-    let wattByDay: WattByDayData;
+    let temp: ClickHouseResponse<Temp>;
+    let tempByDay: ClickHouseResponse<TempByDay>;
+    let wattByDay: ClickHouseResponse<WattByDay>;
+
     try {
-      temp = await getTemps();
-      tempByDay = await getTempByDay("cpu_temp");
-      wattByDay = await getWatts();
+      const resp = await Promise.all([
+        clickhouseQuery<Temp>(tempQuery),
+        clickhouseQuery<TempByDay>(tempByDayQuery),
+        clickhouseQuery<WattByDay>(wattQuery),
+      ]);
+      temp = resp[0];
+      tempByDay = resp[1];
+      wattByDay = resp[2];
     } catch (e) {
       return ctx.renderNotFound({
         title: "Getting data error",
@@ -40,15 +48,21 @@ export default function Page({ data }: PageProps<Data>) {
   return (
     <>
       <Head>
-        <title>MiniPC</title>
+        <title>Mini PC</title>
       </Head>
       <div class="flex flex-col gap-4 p-4 mb-8 md:p-8 mx-auto max-w-full md:max-w-screen-lg">
         <div className="flex flex-col gap-4 mb-8">
           <h1 className="text-center text-2xl">Mini PC</h1>
           <div className="p-6 bg-slate-50	rounded">
             My Mini PC, Beelink SER5 MAX (AMD Ryzen™ 7 5800H), is used for
-            running homelab services like ClickHouse, Home Assistant, nextCloud,
-            etc. I can also access it from anywhere via Tailscale.
+            running homelab services like{" "}
+            <a
+              href="https://clickhouse-monitoring.vercel.app/?ref=mini"
+              target="_blank"
+            >
+              ClickHouse
+            </a>, Home Assistant, nextCloud, etc. I can also access it from
+            anywhere via Tailscale.
           </div>
           <img src="/minipc.jpg" className="responsive w-full rounded" />
         </div>
@@ -67,11 +81,11 @@ export default function Page({ data }: PageProps<Data>) {
           <div>
             <TempHeatmapChart
               temp={data.tempByDay}
-              title={"AMD Ryzen (k10temp sensor)"}
+              title={"AMD Ryzen temperature (°C)"}
             />
             <p className="mt-4">
-              Each row represents a day, and each square represents the average
-              temperature of the CPU at that hour
+              Data from k10temp sensor. Each row represents a day, and each
+              square represents the average temperature of the CPU at that hour
             </p>
           </div>
 

@@ -1,8 +1,9 @@
 import { EChart } from "@/islands/EChart.tsx";
-import { type Data } from "@/libs/get_minipc_temps_by_day.ts";
+import { type TempByDay } from "@/libs/get_minipc_temps_by_day.ts";
+import type { ClickHouseResponse } from "@/libs/clickhouse.ts";
 
 export function TempHeatmapChart(
-  { temp, title }: { temp: Data; title: string },
+  { temp, title }: { temp: ClickHouseResponse<TempByDay>; title: string },
 ) {
   const { data } = temp;
 

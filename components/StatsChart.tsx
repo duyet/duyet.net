@@ -1,10 +1,10 @@
-import { type Data } from "@/libs/get_stats.ts";
+import { type RedirectionStats } from "@/libs/get_stats.ts";
 import { EChart } from "@/islands/EChart.tsx";
 
-export function StatsChart({ data }: { data: Data }) {
-  const rows = (data.data || []).sort((a, b) =>
-    parseInt(b.count) - parseInt(a.count)
-  ).slice(0, 20);
+export function StatsChart(
+  { data }: { data: Array<RedirectionStats> },
+) {
+  const rows = (data || []).sort((a, b) => b.count - a.count).slice(0, 20);
 
   const option = {
     tooltip: {

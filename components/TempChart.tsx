@@ -1,7 +1,10 @@
 import { EChart } from "@/islands/EChart.tsx";
-import { type Data } from "@/libs/get_minipc_temps.ts";
+import { type Temp } from "../libs/get_minipc_temp.ts";
+import type { ClickHouseResponse } from "@/libs/clickhouse.ts";
 
-export function TempChart({ temp, title }: { temp: Data; title: string }) {
+export function TempChart(
+  { temp, title }: { temp: ClickHouseResponse<Temp>; title: string },
+) {
   const { data } = temp;
   const labels = data.map((row) => row.created_at);
   const series = [
