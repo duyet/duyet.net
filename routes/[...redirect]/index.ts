@@ -1,13 +1,12 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
-import { db } from "../../libs/db.ts";
+
+import { kv } from "@/libs/kv.ts";
 import { getLogger, getSlug, getUrl } from "@/libs/utils.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: FreshContext) {
-    const logger = getLogger(req, ctx, db);
+    const logger = getLogger(req, ctx, kv);
     const slug = getSlug(ctx.params.redirect);
-
-    console.log("Got", slug);
 
     // Redirect to the target URL
     const url = getUrl(slug);

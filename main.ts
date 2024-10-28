@@ -12,11 +12,11 @@ import { UserAgent } from "user_agent";
 
 import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
-import { db } from "./libs/db.ts";
-import { getClickHouse } from "./libs/utils.ts";
+import { kv } from "./libs/kv.ts";
+import { getClickHouse } from "./libs/clickhouse.ts";
 
 // Create a queue listener that will process enqueued messages
-db.listenQueue(async (msg) => {
+kv.listenQueue(async (msg) => {
   // console.log(`[${msg.method}] [${msg.ip}]:`, ...msg.msg);
 
   const ua = new UserAgent(msg.ua);

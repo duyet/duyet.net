@@ -7,7 +7,7 @@ export default function Home() {
           src="/logo.svg"
           width="128"
           height="128"
-          alt="the Fresh logo: a sliced lemon dripping with juice"
+          alt="the logo"
         />
         <h1 class="text-4xl font-bold">duyet.net</h1>
       </div>

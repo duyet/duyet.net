@@ -1,8 +1,8 @@
 import type { FreshContext } from "$fresh/server.ts";
 import { getSlug, getUrl } from "./utils.ts";
-import { getClickHouse, getLogger } from "./utils.ts";
+import { getLogger } from "./utils.ts";
 import { isBot } from "./utils.ts";
-import { assert, assertEquals, assertThrows } from "jsr:@std/assert";
+import { assert, assertEquals } from "jsr:@std/assert";
 import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
 
 Deno.test("getUrl should return value", () => {
@@ -31,31 +31,6 @@ Deno.test("getSlug should return valid with params", () => {
   assertEquals(getSlug("/?"), "/");
   assertEquals(getSlug("/?a=b"), "/");
   assertEquals(getSlug("/abc?a=b"), "/abc");
-});
-
-Deno.test("getClickHouse", () => {
-  const originalEnv = Deno.env.toObject();
-
-  Deno.env.set("CLICKHOUSE_URL", "http://example.com");
-  Deno.env.set("CLICKHOUSE_USER", "user");
-  Deno.env.set("CLICKHOUSE_PASSWORD", "password");
-
-  const result = getClickHouse();
-  assertEquals(result.url, "http://example.com");
-  assertEquals(result.headers["X-ClickHouse-User"], "user");
-  assertEquals(result.headers["X-ClickHouse-Key"], "password");
-
-  Deno.env.delete("CLICKHOUSE_URL");
-  assertThrows(
-    () => getClickHouse(),
-    Error,
-    "Missing CLICKHOUSE_URL, CLICKHOUSE_USER or CLICKHOUSE_PASSWORD",
-  );
-
-  // Restore original environment
-  for (const [key, value] of Object.entries(originalEnv)) {
-    Deno.env.set(key, value);
-  }
 });
 
 Deno.test("getLogger", async () => {
