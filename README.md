@@ -7,6 +7,7 @@ The application maps predefined slugs to specific URLs and performs HTTP 301
 redirects.
 
 Some links:
+
 - https://duyet.net/stats - Statistics of redirections
 - https://duyet.net/mini - Statistics of my Mini PC
 - https://duyet.net/cv - Redirect to my resume
