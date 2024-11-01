@@ -9,7 +9,13 @@ export default function Home() {
           height="128"
           alt="the logo"
         />
-        <h1 class="text-4xl font-bold">duyet.net</h1>
+        <div className="flex flex-col gap-4 items-center justify-between">
+          <h1 class="text-4xl font-bold">duyet.net</h1>
+          <div className="inline-flex gap-6">
+            <a className="hover:underline" href="/blog">/blog</a>
+            <a className="hover:underline" href="/cv">/cv</a>
+          </div>
+        </div>
       </div>
     </div>
   );
