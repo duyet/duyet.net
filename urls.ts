@@ -15,6 +15,6 @@ export const urls: Record<string, string> = {
     "https://blog.duyet.net/series/clickhouse-on-kubernetes?utm_source=duyet.net&utm_medium=linkedin&utm_campaign=duyet.net",
   "/mo": "https://monica.im/invitation?c=RJF8T7RT",
   "/api_nini":
-    "https://script.google.com/macros/s/AKfycbxaLlfLAXp54DLBDgge2TJZenBbStmrISvXQnrjn79EQq8bbj3zHqQHM0b-cXPJldv1/exec",
+    "https://script.google.com/macros/s/AKfycbyiUXV00n3EbcU_39nzuZnB8uXsIq9RJ30msOeNOnESA_qz9tdWI9P1sCPrg25JPeUh/exec",
   "/api/nini": "https://duyet.net/api_nini",
 };
