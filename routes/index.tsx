@@ -14,6 +14,7 @@ export default function Home() {
           <div className="inline-flex gap-4">
             <a className="hover:underline p-4" href="/blog">/blog →</a>
             <a className="hover:underline p-4" href="/cv">/cv →</a>
+            <a className="hover:underline p-4" href="/ls">/ls →</a>
           </div>
         </div>
       </div>
