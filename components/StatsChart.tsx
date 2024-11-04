@@ -1,12 +1,17 @@
 import { type RedirectionStats } from "@/libs/get_stats.ts";
 import { EChart } from "@/islands/EChart.tsx";
+import type { Urls } from "@/urls.ts";
 
 export function StatsChart(
-  { data }: { data: Array<RedirectionStats> },
+  { validatedUrls, data }: {
+    validatedUrls: Urls;
+    data: Array<RedirectionStats>;
+  },
 ) {
-  const rows = (data || []).sort((a, b) => b.count - a.count).slice(0, 20);
+  const rows = (data || []).sort((a, b) => b.count - a.count);
 
   const option = {
+    color: ["#f6dc7d"],
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -24,6 +29,7 @@ export function StatsChart(
       name: "Count",
     },
     yAxis: {
+      show: false,
       type: "category",
       data: rows.map((row) => row.source),
       inverse: true,
@@ -32,18 +38,33 @@ export function StatsChart(
       {
         name: "Count",
         type: "bar",
-        data: rows.map((row) => parseInt(row.count)),
+        data: rows.map((row) => {
+          if (!Object.keys(validatedUrls).includes(row.source)) {
+            return {
+              value: row.count,
+              itemStyle: {
+                color: "#DDD",
+                borderColor: "#7c7c7c",
+                borderType: "dashed",
+                opacity: 0.8,
+              },
+              label: {
+                show: true,
+                position: "right",
+              },
+            };
+          }
+
+          return row.count;
+        }),
         label: {
           show: true,
-          position: "right",
+          position: "insideRight",
+          formatter: "{b} ({c} open)",
         },
       },
     ],
   };
 
-  return (
-    <>
-      <EChart option={option} className="w-full min-h-[700px]" />
-    </>
-  );
+  return <EChart option={option} className="w-full min-h-screen" />;
 }

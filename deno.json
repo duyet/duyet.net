@@ -26,6 +26,7 @@
     "**/_fresh/*"
   ],
   "imports": {
+    "@/": "./",
     "@/libs/": "./libs/",
     "@/islands/": "./islands/",
     "@/components/": "./components/",

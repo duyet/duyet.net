@@ -1,7 +1,7 @@
 import { FreshContext, Handlers } from "$fresh/server.ts";
 
 import { kv } from "@/libs/kv.ts";
-import { getLogger, getSlug, getUrl } from "@/libs/utils.ts";
+import { getLogger, getSlug, getTargetUrl } from "@/libs/utils.ts";
 
 export const handler: Handlers = {
   async GET(req: Request, ctx: FreshContext) {
@@ -9,11 +9,11 @@ export const handler: Handlers = {
     const slug = getSlug(ctx.params.redirect);
 
     // Redirect to the target URL
-    const url = getUrl(slug);
-    await logger(slug, "==> redirecting to", url);
+    const target = getTargetUrl(slug);
+    await logger(slug, "==> redirecting to", target);
 
     // Forwards the parameters to the target URL
-    const targetUrl = new URL(url);
+    const targetUrl = new URL(target);
     const params = new URL(req.url).searchParams;
     for (const [key, value] of params) {
       targetUrl.searchParams.append(key, value);
