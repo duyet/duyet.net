@@ -1,16 +1,16 @@
 import type { FreshContext } from "$fresh/server.ts";
-import { getSlug, getUrl } from "./utils.ts";
+import { getSlug, getTargetUrl } from "./utils.ts";
 import { getLogger } from "./utils.ts";
 import { isBot } from "./utils.ts";
 import { assert, assertEquals } from "jsr:@std/assert";
 import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
 
 Deno.test("getUrl should return value", () => {
-  assert(getUrl("/").length > 0);
+  assert(getTargetUrl("/").length > 0);
 });
 
 Deno.test("getUrl should return root path with with invalid path", () => {
-  assertEquals(getUrl("*&&&^%%$$$#"), getUrl("/"));
+  assertEquals(getTargetUrl("*&&&^%%$$$#"), getTargetUrl("/"));
 });
 
 Deno.test("getSlug should return valid value", () => {

@@ -1,8 +1,13 @@
 import type { FreshContext } from "$fresh/server.ts";
-import { urls } from "../urls.ts";
+import { urls } from "@/urls.ts";
 
-export const getUrl = (slug: string): string => {
-  return urls[slug] || urls["/"];
+export const getTargetUrl = (slug: string): string => {
+  const target = urls[slug] || urls["/"];
+
+  if (typeof target === "object") return target.target;
+  if (typeof target === "string") return target;
+
+  throw new Error(`Invalid target: ${slug}, ${target}`);
 };
 
 export const getSlug = (url: string): string => {
