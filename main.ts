@@ -26,13 +26,14 @@ kv.listenQueue(async (msg) => {
   const ch = getClickHouse();
 
   try {
+    const query = `INSERT INTO duyet_analytics.duyet_redirect (source, target, ip, user_agent, browser, os_name, os_version, device_type)
+         VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${ua.browser.name}', '${ua.os.name}', '${ua.os.version}', '${ua.device.type}')`;
+    console.log(query)
+
     const resp = await fetch(ch.url, {
       method: "POST",
       headers: ch.headers,
-      body:
-        `INSERT INTO duyet_analytics.duyet_redirect (source, target, ip, user_agent, browser, os_name, os_version, device_type)
-           VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${ua.browser.name}', '${ua.os.name}', '${ua.os.version}', '${ua.device.type}')
-           Format JSON`,
+      body: query,
     });
     const json = await resp.json();
     console.log("Inserted logs to ClickHouse: ", json, ", msg:", msg);
