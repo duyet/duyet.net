@@ -26,9 +26,14 @@ kv.listenQueue(async (msg) => {
   const ch = getClickHouse();
 
   try {
+    const browser = ua.browser.name || "";
+    const osName = ua.os.name || "";
+    const osVersion = ua.os.version || "";
+    const deviceType = ua.device.type || "";
+
     const query =
       `INSERT INTO duyet_analytics.duyet_redirect (source, target, ip, user_agent, browser, os_name, os_version, device_type)
-         VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${ua.browser.name}', '${ua.os.name}', '${ua.os.version}', '${ua.device.type}')`;
+       VALUES ('${source}', '${target}', '${msg.ip}', '${msg.ua}', '${browser}', '${osName}', '${osVersion}', '${deviceType}')`;
     console.log(query);
 
     const resp = await fetch(ch.url, {
