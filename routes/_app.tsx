@@ -9,8 +9,7 @@ export default function App({ Component }: PageProps) {
         <title>duyet</title>
         <link rel="stylesheet" href="/styles.css" />
         <script src="https://cdn.seline.so/seline.js" async></script>
-        <script src="https://cm43x9afh00003b61bdnjgdkj.d.jitsu.com/p.js" async>
-        </script>
+        <script src="https://j.duyet.net/p.js" async></script>
       </head>
       <body>
         <Component />
