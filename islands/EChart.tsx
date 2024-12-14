@@ -20,7 +20,7 @@ export interface ReactEChartsProps {
   className?: string;
   settings?: SetOptionOpts;
   loading?: boolean;
-  theme?: "light" | "dark";
+  theme?: "light" | "dark" | "macarons" | "vintage";
 }
 
 export function EChart({
@@ -35,7 +35,6 @@ export function EChart({
   const chartRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    console.log("initialise chart");
     // Initialize chart
     let chart: ECharts | undefined;
     if (chartRef?.current !== null) {
@@ -65,6 +64,7 @@ export function EChart({
       echartInstance?.setOption(option, settings);
     }
   }, [option, settings, theme]);
+
   useEffect(() => {
     if (chartRef.current !== null) {
       const echartInstance = getInstanceByDom(chartRef.current);

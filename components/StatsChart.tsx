@@ -66,5 +66,7 @@ export function StatsChart(
     ],
   };
 
-  return <EChart option={option} className="w-full min-h-screen" />;
+  return (
+    <EChart option={option} theme="macarons" className="w-full min-h-screen" />
+  );
 }

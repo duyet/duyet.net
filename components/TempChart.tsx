@@ -59,6 +59,12 @@ export function TempChart(
             min: "dataMin",
             max: "dataMax",
             offset: 50,
+            axisLabel: {
+              formatter: (value: string) => {
+                const date = new Date(value);
+                return `${date.getHours()}:${date.getMinutes()}`;
+              },
+            },
           },
           yAxis: {
             scale: true,

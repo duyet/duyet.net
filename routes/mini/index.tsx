@@ -44,7 +44,9 @@ export const handler: Handlers<Data> = {
   },
 };
 
-export default function Page({ data }: PageProps<Data>) {
+export default function Page(
+  { data: { temp, tempByDay, wattByDay } }: PageProps<Data>,
+) {
   return (
     <>
       <Head>
@@ -69,7 +71,7 @@ export default function Page({ data }: PageProps<Data>) {
 
         <div className="flex flex-col gap-8">
           <div>
-            <TempChart temp={data.temp} title="Sensors" />
+            <TempChart temp={temp} title="Sensors" />
             <p className="mt-4">
               There is a cron job that runs every minute using{" "}
               <code>lm-sensors</code>{" "}
@@ -80,7 +82,7 @@ export default function Page({ data }: PageProps<Data>) {
 
           <div>
             <TempHeatmapChart
-              temp={data.tempByDay}
+              temp={tempByDay}
               title={"AMD Ryzen temperature (°C)"}
             />
             <p className="mt-4">
@@ -91,7 +93,7 @@ export default function Page({ data }: PageProps<Data>) {
 
           <div>
             <WattHeatmapChart
-              watts={data.wattByDay}
+              watts={wattByDay}
               title={"MiniPC power consumption (kWh)"}
             />
             <p className="mt-4">

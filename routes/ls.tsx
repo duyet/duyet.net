@@ -1,29 +1,28 @@
 import { FreshContext, Handlers, type PageProps } from "$fresh/server.ts";
-import { type Urls, urls } from "@/urls.ts";
+import { type UrlConfig, type Urls, urls } from "@/urls.ts";
 
 type DataProps = {
   urls: Urls;
-  systemUrls: Record<string, string>;
+  systemUrls: Urls;
 };
 
 export const handler: Handlers<DataProps> = {
   GET(_req: Request, ctx: FreshContext) {
-    const systemUrls = {
-      "/ls": "this page",
-      "/ping": "pong",
-      "/health": "are you ok?",
-      "/stats": "counting stats",
-      "/mini": "minipc stats",
-    };
+    const systemUrls = Object.entries(urls).reduce((acc, [slug, config]) => {
+      if (typeof config === "object" && config.system) {
+        acc[slug] = config;
+      }
+
+      return acc;
+    }, {} as Urls);
+
     return ctx.render({ urls, systemUrls });
   },
 };
 
 export default function Listing(
-  props: PageProps<DataProps>,
+  { data: { urls, systemUrls } }: PageProps<DataProps>,
 ) {
-  const { urls, systemUrls } = props.data;
-
   return (
     <div class="px-4 py-8 mx-auto h-screen flex gap-8">
       <div class="max-w-screen-xl mx-auto flex flex-col items-center justify-center">
@@ -36,29 +35,33 @@ export default function Listing(
         />
         <div className="flex flex-col gap-4 justify-between p-5">
           <ul className="columns-1 md:columns-3 gap-16 list-decimal">
-            {Object.entries(urls).map(([url, target]) => (
-              <li key={url}>
-                <a className="underline inline-flex" href={url} target="_blank">
-                  {url}
-                </a>
-                {typeof target === "object"
-                  ? <span className="italic truncate">- {target.desc}</span>
-                  : null}
-              </li>
+            {Object.entries(systemUrls).map(([url, target]) => (
+              <UrlListItem key={url} url={url} target={target} />
             ))}
           </ul>
+
           <hr className="mt-5 mb-5 border-dotted" />
+
           <ul className="columns-1 md:columns-3 gap-16 list-decimal">
-            {Object.entries(systemUrls).map(([url, desc]) => (
-              <li key={url}>
-                <a className="underline" href={url} target="_blank">{url}</a>
-                {" - "}
-                <span className="italic truncate">{desc}</span>
-              </li>
+            {Object.entries(urls).map(([url, target]) => (
+              <UrlListItem key={url} url={url} target={target} />
             ))}
           </ul>
         </div>
       </div>
     </div>
+  );
+}
+
+function UrlListItem(
+  { url, target }: { url: string; target: string | UrlConfig },
+) {
+  return (
+    <li>
+      <a className="underline" href={url} target="_blank">{url}</a>
+      {typeof target === "object"
+        ? <span className="italic truncate">{` - ${target.desc}`}</span>
+        : null}
+    </li>
   );
 }
