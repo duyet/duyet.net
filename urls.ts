@@ -1,6 +1,12 @@
+export type UrlConfig = {
+  target: string;
+  desc: string;
+  system?: boolean;
+};
+
 export type Urls = Record<
   string,
-  string | { target: string; desc: string; system?: boolean }
+  string | UrlConfig
 >;
 
 export const urls: Urls = {

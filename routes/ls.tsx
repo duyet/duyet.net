@@ -1,5 +1,5 @@
 import { FreshContext, Handlers, type PageProps } from "$fresh/server.ts";
-import { type Urls, urls } from "@/urls.ts";
+import { type UrlConfig, type Urls, urls } from "@/urls.ts";
 
 type DataProps = {
   urls: Urls;
@@ -36,16 +36,7 @@ export default function Listing(
         <div className="flex flex-col gap-4 justify-between p-5">
           <ul className="columns-1 md:columns-3 gap-16 list-decimal">
             {Object.entries(systemUrls).map(([url, target]) => (
-              <li key={url}>
-                <a className="underline" href={url} target="_blank">{url}</a>
-                {typeof target === "object"
-                  ? (
-                    <span className="italic truncate">
-                      {` - ${target.desc}`}
-                    </span>
-                  )
-                  : null}
-              </li>
+              <UrlListItem key={url} url={url} target={target} />
             ))}
           </ul>
 
@@ -53,22 +44,24 @@ export default function Listing(
 
           <ul className="columns-1 md:columns-3 gap-16 list-decimal">
             {Object.entries(urls).map(([url, target]) => (
-              <li key={url}>
-                <a className="underline inline-flex" href={url} target="_blank">
-                  {url}
-                </a>
-                {typeof target === "object"
-                  ? (
-                    <span className="italic truncate">
-                      {` - ${target.desc}`}
-                    </span>
-                  )
-                  : null}
-              </li>
+              <UrlListItem key={url} url={url} target={target} />
             ))}
           </ul>
         </div>
       </div>
     </div>
+  );
+}
+
+function UrlListItem(
+  { url, target }: { url: string; target: string | UrlConfig },
+) {
+  return (
+    <li>
+      <a className="underline" href={url} target="_blank">{url}</a>
+      {typeof target === "object"
+        ? <span className="italic truncate">{` - ${target.desc}`}</span>
+        : null}
+    </li>
   );
 }
