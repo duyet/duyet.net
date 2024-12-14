@@ -34,6 +34,7 @@ export function WattHeatmapChart(
   return (
     <div className="min-h-[400px]">
       <EChart
+        theme="macarons"
         option={{
           title: { text: title },
           tooltip: {
@@ -81,7 +82,7 @@ export function WattHeatmapChart(
             },
           ],
         }}
-        className="w-full h-[400px]"
+        className="w-full h-[600px]"
       />
     </div>
   );
