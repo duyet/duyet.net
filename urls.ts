@@ -60,6 +60,6 @@ export const urls: Urls = {
   },
   "/mo": "https://monica.im/invitation?c=RJF8T7RT",
   "/api_nini":
-    "https://script.google.com/macros/s/AKfycbxKBODnm3QraPOITrFMGys__6_uFMxtnFyc5CHn7Jzr-Ht2FebOsFAC5M-8yeVHuB_P/exec",
+    "https://script.google.com/macros/s/AKfycbxMwI-TYN05oHfqHB5nwO80WwpHuYsqSFqYakgLtICljYaJ_pPZlNQuY1_RE1xG3joL/exec",
   "/api/nini": "https://duyet.net/api_nini",
 };
