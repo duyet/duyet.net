@@ -8,15 +8,19 @@ type DataProps = {
 
 export const handler: Handlers<DataProps> = {
   GET(_req: Request, ctx: FreshContext) {
-    const systemUrls = Object.entries(urls).reduce((acc, [slug, config]) => {
-      if (typeof config === "object" && config.system) {
-        acc[slug] = config;
-      }
+    const { systemUrls, urlsWithoutSystem } = Object.entries(urls).reduce(
+      (acc, [slug, config]) => {
+        if (typeof config === "object" && config.system) {
+          acc.systemUrls[slug] = config;
+        } else {
+          acc.urlsWithoutSystem[slug] = config;
+        }
+        return acc;
+      },
+      { systemUrls: {} as Urls, urlsWithoutSystem: {} as Urls },
+    );
 
-      return acc;
-    }, {} as Urls);
-
-    return ctx.render({ urls, systemUrls });
+    return ctx.render({ urls: urlsWithoutSystem, systemUrls });
   },
 };
 

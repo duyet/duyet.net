@@ -14,13 +14,14 @@ export function StatsLastUpdatedChart(
   return (
     <div className={"text-gray-600 text-sm"}>
       <p>
-        Last updated at{" "}
-        <code className="bg-gray-100 p-1 rounded">{row.event_time}</code>{" "}
-        <code>{row.source}</code> → <code>{row.target}</code>
+        Last event:
+        <code>{row.source}</code> → <code>{row.target}</code>{" "}
+        <code className="bg-gray-100 p-1 rounded">{row.event_time}</code>
+        {" "}
       </p>
       <p>
         {[row.browser, row.os_name, row.os_version, row.device_type].filter(
-          Boolean,
+          (v) => v && v !== "",
         ).map((v) => ` | ${v}`)}
       </p>
     </div>
