@@ -9,6 +9,7 @@ import * as $ads_txt from "./routes/ads.txt.ts";
 import * as $health from "./routes/health.ts";
 import * as $index from "./routes/index.tsx";
 import * as $ls from "./routes/ls.tsx";
+import * as $mini_layout from "./routes/mini/_layout.tsx";
 import * as $mini_index from "./routes/mini/index.tsx";
 import * as $ping from "./routes/ping.ts";
 import * as $robots_txt from "./routes/robots.txt.ts";
@@ -26,6 +27,7 @@ const manifest = {
     "./routes/health.ts": $health,
     "./routes/index.tsx": $index,
     "./routes/ls.tsx": $ls,
+    "./routes/mini/_layout.tsx": $mini_layout,
     "./routes/mini/index.tsx": $mini_index,
     "./routes/ping.ts": $ping,
     "./routes/robots.txt.ts": $robots_txt,

@@ -1,6 +1,6 @@
 import { type RedirectionStats } from "@/libs/get_stats.ts";
 import { EChart } from "@/islands/EChart.tsx";
-import type { Urls } from "@/urls.ts";
+import { type Urls } from "@/urls.ts";
 
 export function StatsChart(
   { validatedUrls, data }: {
@@ -19,10 +19,9 @@ export function StatsChart(
       },
     },
     grid: {
-      left: "3%",
-      right: "4%",
       bottom: "3%",
-      containLabel: true,
+      containLabel: false,
+      height: rows.length * 100,
     },
     xAxis: {
       type: "log",
@@ -67,6 +66,10 @@ export function StatsChart(
   };
 
   return (
-    <EChart option={option} theme="macarons" className="w-full min-h-screen" />
+    <EChart
+      option={option}
+      theme="macarons"
+      className={`w-full min-h-screen`}
+    />
   );
 }
