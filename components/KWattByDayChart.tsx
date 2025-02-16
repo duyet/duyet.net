@@ -1,50 +1,23 @@
 import { EChart } from "@/islands/EChart.tsx";
-import { type Temp } from "../libs/get_minipc_temp.ts";
 import type { ClickHouseResponse } from "@/libs/clickhouse.ts";
+import type { KWattByDay } from "@/libs/get_minipc_watt.ts";
 
-export function TempChart(
-  { temp, title }: { temp: ClickHouseResponse<Temp>; title: string },
+export function KWattByDayChart(
+  { wattByHour, title }: {
+    wattByHour: ClickHouseResponse<KWattByDay>;
+    title: string;
+  },
 ) {
-  const { data } = temp;
-  const labels = data.map((row) => row.created_at);
+  const { data } = wattByHour;
+  const labels = data.map((row) => row.day);
   const series = [
     {
-      name: "cpu_temp",
-      type: "line",
-      data: data.map((row) => Math.trunc(row.cpu_temp || 0)),
+      name: "Wh",
+      type: "bar",
+      data: data.map((row) => Math.trunc(row.total_wh || 0)),
       markPoint: {
         data: [
-          { type: "max", name: "max_cpu_temp" },
-        ],
-      },
-    },
-    {
-      name: "wifi_temp",
-      type: "line",
-      data: data.map((row) => Math.trunc(row.wifi_temp || 0)),
-      markPoint: {
-        data: [
-          { type: "max", name: "max_wifi_temp" },
-        ],
-      },
-    },
-    {
-      name: "ssd_temp",
-      type: "line",
-      data: data.map((row) => Math.trunc(row.ssd_temp || 0)),
-      markPoint: {
-        data: [
-          { type: "max", name: "max_ssd_temp" },
-        ],
-      },
-    },
-    {
-      name: "hdd_temp",
-      type: "line",
-      data: data.map((row) => Math.trunc(row.hdd_temp || 0)),
-      markPoint: {
-        data: [
-          { type: "max", name: "max_hdd_temp" },
+          { type: "max", name: "max_Wh" },
         ],
       },
     },
@@ -78,7 +51,7 @@ export function TempChart(
             scale: true,
             type: "value",
             axisLabel: {
-              formatter: "{value} °C",
+              formatter: "{value} kWh",
             },
           },
           series,
