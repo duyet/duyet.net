@@ -1,15 +1,17 @@
 export interface Temp {
   created_at: string;
-  iwlwifi_temp?: number;
-  nvme_composite_temp?: number;
+  ssd_temp?: number;
+  hdd_temp?: number;
+  wifi_temp?: number;
   cpu_temp?: number;
 }
 
 export const query = `
   SELECT
       toStartOfHour(created_at) AS created_at,
-      avg(nvme_composite_temp) AS nvme_composite_temp,
-      avg(iwlwifi_temp) AS iwlwifi_temp,
+      avg(ssd_temp) AS ssd_temp,
+      avg(hdd_temp) AS hdd_temp,
+      avg(wifi_temp) AS wifi_temp,
       avg(cpu_temp) AS cpu_temp
   FROM duyet_analytics.homelab_ubuntu_sensors
   WHERE (toDateTime(created_at) >= toDateTime(now() - toIntervalDay(7))) AND (toDateTime(created_at) <= toDateTime(now()))
