@@ -16,6 +16,7 @@ import * as $ping from "./routes/ping.ts";
 import * as $robots_txt from "./routes/robots.txt.ts";
 import * as $stats_index from "./routes/stats/index.tsx";
 import * as $EChart from "./islands/EChart.tsx";
+import * as $StatsChart from "./islands/StatsChart.tsx";
 import * as $theme from "./islands/theme.ts";
 import type { Manifest } from "$fresh/server.ts";
 
@@ -37,6 +38,7 @@ const manifest = {
   },
   islands: {
     "./islands/EChart.tsx": $EChart,
+    "./islands/StatsChart.tsx": $StatsChart,
     "./islands/theme.ts": $theme,
   },
   baseUrl: import.meta.url,

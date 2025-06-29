@@ -2,7 +2,7 @@ import type { FreshContext } from "$fresh/server.ts";
 import { getSlug, getTargetUrl } from "./utils.ts";
 import { getLogger } from "./utils.ts";
 import { isBot } from "./utils.ts";
-import { assert, assertEquals } from "jsr:@std/assert";
+import { assert, assertEquals, assertThrows } from "jsr:@std/assert";
 import { assertSpyCalls, spy } from "jsr:@std/testing/mock";
 
 Deno.test("getUrl should return value", () => {
@@ -10,7 +10,24 @@ Deno.test("getUrl should return value", () => {
 });
 
 Deno.test("getUrl should return root path with with invalid path", () => {
-  assertEquals(getTargetUrl("*&&&^%%$$$#"), getTargetUrl("/"));
+  // This test now properly throws for invalid slug format
+  assertThrows(
+    () => {
+      getTargetUrl("*&&&^%%$$$#");
+    },
+    Error,
+    "Invalid slug format",
+  );
+});
+
+Deno.test("getUrl should throw for invalid slug format", () => {
+  assertThrows(
+    () => {
+      getTargetUrl("<script>");
+    },
+    Error,
+    "Invalid slug format",
+  );
 });
 
 Deno.test("getSlug should return valid value", () => {
@@ -46,6 +63,24 @@ Deno.test("getLogger", async () => {
   await logger("test message");
 
   assertSpyCalls(mockKv.enqueue, 1);
+});
+
+Deno.test("getLogger should skip bots", async () => {
+  const mockRequest = new Request("https://example.com", {
+    headers: { "user-agent": "Googlebot" },
+  });
+  const mockCtx = { remoteAddr: { hostname: "127.0.0.1" } };
+  const mockKv = { enqueue: spy(async () => {}) };
+
+  const logger = getLogger(
+    mockRequest as Request,
+    mockCtx as FreshContext,
+    mockKv as unknown as Deno.Kv,
+  );
+  await logger("test message");
+
+  // Should not enqueue for bots
+  assertSpyCalls(mockKv.enqueue, 0);
 });
 
 Deno.test("isBot", () => {

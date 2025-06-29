@@ -18,6 +18,7 @@ export type CSSProperties = { [key: string]: string | number };
 export interface ReactEChartsProps {
   option: EChartsOption;
   className?: string;
+  style?: CSSProperties;
   settings?: SetOptionOpts;
   loading?: boolean;
   theme?: "light" | "dark" | "macarons" | "vintage";
@@ -26,6 +27,7 @@ export interface ReactEChartsProps {
 export function EChart({
   option,
   className,
+  style,
   settings,
   loading,
   theme,
@@ -78,6 +80,7 @@ export function EChart({
     <div
       ref={chartRef}
       className={className}
+      style={style}
     />
   );
 }

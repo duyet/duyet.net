@@ -3,6 +3,7 @@
 
 # Code Coverage
 cov/
+coverage/
 *.lcov
 
 # dotenv environment variable files
