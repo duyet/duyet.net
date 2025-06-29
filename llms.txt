@@ -1,16 +1,16 @@
 # duyet.net
 
-Simple redirect application built with Deno. It redirects various slugs to their corresponding URLs.
+This is the personal website of Duyet Le, a Senior Data Engineer and technology enthusiast. The website serves as a central hub for Duyet's professional presence, technical projects, and digital resources.
 
-The application maps predefined slugs to specific URLs and performs HTTP 301 redirects with analytics tracking using ClickHouse database.
+Built with modern web technologies including Deno and Fresh framework, the site demonstrates best practices in web development while providing a gateway to Duyet's various online platforms and projects.
 
 ## Key Features
 
-- URL shortening and redirection service
-- Real-time analytics tracking with ClickHouse
+- Personal hub and digital gateway for professional presence
+- Real-time analytics and system monitoring dashboards
 - Mini PC monitoring dashboard (temperature, power consumption, memory usage)
-- Bot detection and filtering
-- Statistics visualization with interactive charts
+- Interactive data visualizations and technical demonstrations
+- Modern web architecture showcasing latest technologies
 
 ## Tech Stack (Current Site Implementation)
 
@@ -50,14 +50,14 @@ deno task start
 
 This will watch the project directory and restart as necessary.
 
-## Available Links
+## Available Pages & Features
 
-- https://duyet.net/stats - Statistics of redirections
-- https://duyet.net/mini - Statistics of my Mini PC
-- https://duyet.net/cv - Redirect to my resume
-- https://duyet.net/about - Redirect to about me
-- https://duyet.net/blog - Redirect to my blog
-- https://duyet.net/github - Redirect to my GitHub profile
+- https://duyet.net/stats - Analytics and statistics dashboard
+- https://duyet.net/mini - Mini PC monitoring and system stats
+- https://duyet.net/cv - Professional resume and experience
+- https://duyet.net/about - Personal information and background
+- https://duyet.net/blog - Technical blog and articles
+- https://duyet.net/github - Open source projects and contributions
 
 ## External Resources
 
