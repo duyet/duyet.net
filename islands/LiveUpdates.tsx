@@ -2,12 +2,19 @@ import { useEffect, useState } from "preact/hooks";
 import { LiveStats } from "@/libs/live-sessions.ts";
 
 interface LiveUpdatesProps {
-  initialStats: LiveStats;
+  initialStats?: LiveStats;
   onUpdate?: (stats: LiveStats) => void;
 }
 
+const defaultStats: LiveStats = {
+  total: 0,
+  byType: { human: 0, bot: 0, llm: 0 },
+  byLocation: {},
+  trend: [],
+};
+
 export default function LiveUpdates(
-  { initialStats, onUpdate }: LiveUpdatesProps,
+  { initialStats = defaultStats, onUpdate }: LiveUpdatesProps,
 ) {
   const [stats, setStats] = useState<LiveStats>(initialStats);
   const [connected, setConnected] = useState(false);
