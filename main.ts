@@ -14,6 +14,7 @@ import manifest from "./fresh.gen.ts";
 import config from "./fresh.config.ts";
 import { kv } from "./libs/kv.ts";
 import { getClickHouse } from "./libs/clickhouse.ts";
+import { startCleanupService } from "./libs/live-cleanup.ts";
 
 // Create a queue listener that will process enqueued messages
 kv.listenQueue(async (msg) => {
@@ -47,5 +48,8 @@ kv.listenQueue(async (msg) => {
     console.error("ClickHouse error:", e, ", msg:", msg);
   }
 });
+
+// Start live sessions cleanup service
+startCleanupService();
 
 await start(manifest, config);

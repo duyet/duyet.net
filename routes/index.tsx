@@ -1,4 +1,34 @@
-export default function Home() {
+import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
+import { kv } from "@/libs/kv.ts";
+import { LiveSessionManager, LiveStats } from "@/libs/live-sessions.ts";
+import LiveUsersBadge from "@/islands/LiveUsersBadge.tsx";
+
+interface HomePageData {
+  liveStats: LiveStats;
+}
+
+export const handler: Handlers<HomePageData> = {
+  async GET(_req: Request, ctx: FreshContext) {
+    const sessionManager = new LiveSessionManager(kv);
+
+    try {
+      const liveStats = await sessionManager.getLiveStats();
+      return ctx.render({ liveStats });
+    } catch (error) {
+      console.error("Failed to get live stats:", error);
+      return ctx.render({
+        liveStats: {
+          total: 0,
+          byType: { human: 0, bot: 0, llm: 0 },
+          byLocation: {},
+          trend: [],
+        },
+      });
+    }
+  },
+};
+
+export default function Home({ data }: PageProps<HomePageData>) {
   return (
     <div class="px-4 py-6 mx-auto min-h-screen flex bg-slate-50">
       <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
@@ -96,6 +126,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <LiveUsersBadge initialStats={data.liveStats} />
     </div>
   );
 }

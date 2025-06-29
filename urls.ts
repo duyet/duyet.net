@@ -15,6 +15,7 @@ export const urls: Urls = {
   "/health": { target: "/health", desc: "are you ok?", system: true },
   "/stats": { target: "/stats", desc: "counting stats", system: true },
   "/mini": { target: "/mini", desc: "minipc stats", system: true },
+  "/live": { target: "/live", desc: "live user analytics", system: true },
   "/llms.txt": { target: "/llms.txt", desc: "LLMs.txt", system: true },
 
   "/": "https://duyet.net",

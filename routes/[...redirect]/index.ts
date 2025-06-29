@@ -8,6 +8,8 @@ export const handler: Handlers = {
     const logger = getLogger(req, ctx, kv);
     const slug = getSlug(ctx.params.redirect);
 
+    // Session tracking is handled by middleware
+
     // Redirect to the target URL
     const target = getTargetUrl(slug);
     await logger(slug, "==> redirecting to", target);
