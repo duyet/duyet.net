@@ -28,60 +28,122 @@ export default async function Page(_req: Request, _ctx: RouteContext) {
   const kWhByDay = await clickhouseQuery<KWattByDay>(queryKWattByDay);
 
   return (
-    <div className="flex flex-col gap-8">
-      <div>
+    <div className="space-y-6">
+      {/* Temperature Sensors Overview */}
+      <div class="bg-white border border-slate-200 rounded-lg p-6">
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+            <span>🌡️</span>
+            Live Sensors
+          </h2>
+          <p class="text-slate-600 text-sm">Real-time temperature monitoring</p>
+        </div>
         <TempChart temp={temp} title="Sensors" />
-        <p className="mt-4">
-          There is a cron job that runs every minute using{" "}
-          <code>lm-sensors</code>{" "}
-          to collect temperature data and send it to ClickHouse, measuring CPU
-          temperature, Wi-Fi adapter, NVMe temperature, etc.
-        </p>
+        <div class="mt-4 p-4 bg-slate-50 rounded-lg">
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Automated monitoring via{" "}
+            <code class="bg-slate-200 px-2 py-1 rounded text-slate-800">
+              lm-sensors
+            </code>{" "}
+            cron job collecting temperature data every minute from CPU, Wi-Fi
+            adapter, NVMe, and other components.
+          </p>
+        </div>
       </div>
 
-      <div>
+      {/* CPU Temperature Heatmap */}
+      <div class="bg-white border border-slate-200 rounded-lg p-6">
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+            <span>🔥</span>
+            CPU Temperature Heatmap
+          </h2>
+          <p class="text-slate-600 text-sm">
+            AMD Ryzen 7 5800H thermal patterns
+          </p>
+        </div>
         <TempHeatmapChart
           temp={tempCPUByDay}
           title="CPU AMD Ryzen temperature (°C)"
         />
-        <p className="mt-4">
-          Data from k10temp sensor. Each row represents a day, and each square
-          represents the average temperature of the CPU at that hour
-        </p>
+        <div class="mt-4 p-4 bg-slate-50 rounded-lg">
+          <p className="text-slate-600 text-sm leading-relaxed">
+            Data from{" "}
+            <code class="bg-slate-200 px-2 py-1 rounded text-slate-800">
+              k10temp
+            </code>{" "}
+            sensor. Each row represents a day, each square shows average hourly
+            CPU temperature.
+          </p>
+        </div>
       </div>
 
-      <div>
-        <TempHeatmapChart
-          temp={tempSSDByDay}
-          title="SSD temperature (°C)"
-        />
-        <p className="mt-4">
-        </p>
+      {/* Storage Temperature Grid */}
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white border border-slate-200 rounded-lg p-6">
+          <div class="mb-4">
+            <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+              <span>💾</span>
+              SSD Temperature
+            </h2>
+            <p class="text-slate-600 text-sm">NVMe thermal monitoring</p>
+          </div>
+          <TempHeatmapChart
+            temp={tempSSDByDay}
+            title="SSD temperature (°C)"
+          />
+        </div>
+
+        <div class="bg-white border border-slate-200 rounded-lg p-6">
+          <div class="mb-4">
+            <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+              <span>💿</span>
+              HDD Temperature
+            </h2>
+            <p class="text-slate-600 text-sm">Hard drive thermal data</p>
+          </div>
+          <TempHeatmapChart
+            temp={tempHDDByDay}
+            title="HDD temperature (°C)"
+          />
+        </div>
       </div>
 
-      <div>
-        <TempHeatmapChart
-          temp={tempHDDByDay}
-          title="HDD temperature (°C)"
-        />
-        <p className="mt-4">
-        </p>
-      </div>
+      {/* Power Consumption Section */}
+      <div class="bg-white border border-slate-200 rounded-lg p-6">
+        <div class="mb-4">
+          <h2 class="text-xl font-semibold text-slate-900 flex items-center gap-2">
+            <span>⚡</span>
+            Power Consumption
+          </h2>
+          <p class="text-slate-600 text-sm">Energy usage analytics</p>
+        </div>
 
-      <div>
-        <WattHeatmapChart
-          watts={wattByDay}
-          title="Power consumption (kWh)"
-        />
-        <KWattByDayChart
-          wattByHour={kWhByDay}
-          title="Power consumption by day"
-        />
-        <p className="mt-4">
-          Cron job that runs every minute using powerstat - a tool to measure
-          power consumption.
-        </p>
-        <pre className="mt-4"><code>powerstat -R -d 0</code></pre>
+        <div class="space-y-6">
+          <WattHeatmapChart
+            watts={wattByDay}
+            title="Power consumption (kWh)"
+          />
+          <KWattByDayChart
+            wattByHour={kWhByDay}
+            title="Power consumption by day"
+          />
+        </div>
+
+        <div class="mt-4 p-4 bg-slate-50 rounded-lg">
+          <p className="text-slate-600 text-sm leading-relaxed mb-2">
+            Continuous power monitoring using{" "}
+            <code class="bg-slate-200 px-2 py-1 rounded text-slate-800">
+              powerstat
+            </code>
+            tool with minute-level precision.
+          </p>
+          <div class="bg-slate-800 p-3 rounded-lg">
+            <code class="text-green-400 font-mono text-sm">
+              powerstat -R -d 0
+            </code>
+          </div>
+        </div>
       </div>
     </div>
   );

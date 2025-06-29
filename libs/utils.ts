@@ -1,54 +1,25 @@
+// Legacy exports for backward compatibility
+// TODO: Migrate to use service layer directly
+
+export { RedirectService } from "@/src/domains/redirect/redirect.service.ts";
+export { AnalyticsService } from "@/src/domains/analytics/analytics.service.ts";
+export { getSlug, isBot } from "@/src/shared/utils/validation.ts";
+
 import type { FreshContext } from "$fresh/server.ts";
-import { urls } from "@/urls.ts";
+import { RedirectService } from "@/src/domains/redirect/redirect.service.ts";
+import { AnalyticsService } from "@/src/domains/analytics/analytics.service.ts";
 
+// Legacy function - use RedirectService.getTargetUrl instead
 export const getTargetUrl = (slug: string): string => {
-  const target = urls[slug] || urls["/"];
-
-  if (typeof target === "object") return target.target;
-  if (typeof target === "string") return target;
-
-  throw new Error(`Invalid target: ${slug}, ${target}`);
+  return RedirectService.getTargetUrl(slug);
 };
 
-export const getSlug = (url: string): string => {
-  try {
-    const normalizedUrl = ("" + url).replace(/^\/+/, ""); // Remove leading slashe
-    const parsedUrl = new URL(normalizedUrl, "http://localhost"); // Use localhost as the base for relative URLs
-    const pathname = parsedUrl.pathname;
-    // Return the pathname, ensuring it starts with a single slash and handles empty paths correctly
-    return pathname === "/" ? "/" : pathname.replace(/\/+$/, ""); // Return "/" for empty path
-  } catch {
-    return "/"; // Return root if URL parsing fails
-  }
-};
-
+// Legacy function - use AnalyticsService instead
 export const getLogger =
   (req: Request, ctx: FreshContext, kv: Deno.Kv) =>
   async (
     ...msg: string[]
   ) => {
-    const method = req.method;
-    const ip = ctx.remoteAddr.hostname || "";
-    const ua = req.headers.get("user-agent");
-
-    const payload = {
-      method,
-      ip,
-      ua,
-      msg,
-    };
-
-    if (isBot(ua)) {
-      console.log("Bot detected, skip logging to ClickHouse", ua);
-      return;
-    }
-
-    console.log("Enqueue", payload);
-    await kv.enqueue(payload);
+    const service = new AnalyticsService(kv);
+    await service.log(req, ctx, ...msg);
   };
-
-export const isBot = (ua?: string | null): boolean => {
-  const pattern = /bot|crawl|http|lighthouse|scan|search|spider|upptime/i;
-
-  return Boolean(ua) && pattern.test(ua || "");
-};
