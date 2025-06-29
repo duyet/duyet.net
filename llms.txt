@@ -1,0 +1,68 @@
+# duyet.net
+
+Simple redirect application built with Deno. It redirects various slugs to their corresponding URLs.
+
+The application maps predefined slugs to specific URLs and performs HTTP 301 redirects with analytics tracking using ClickHouse database.
+
+## Key Features
+
+- URL shortening and redirection service
+- Real-time analytics tracking with ClickHouse
+- Mini PC monitoring dashboard (temperature, power consumption, memory usage)
+- Bot detection and filtering
+- Statistics visualization with interactive charts
+
+## Tech Stack
+
+- **Runtime**: Deno with TypeScript
+- **Framework**: Fresh (full-stack web framework)
+- **UI**: Preact + TailwindCSS
+- **Database**: ClickHouse for analytics
+- **Deployment**: Deno Deploy
+
+## Usage
+
+Make sure to install Deno: https://deno.land/manual/getting_started/installation
+
+Then start the project:
+
+```bash
+deno task start
+```
+
+This will watch the project directory and restart as necessary.
+
+## Available Links
+
+- https://duyet.net/stats - Statistics of redirections
+- https://duyet.net/mini - Statistics of my Mini PC
+- https://duyet.net/cv - Redirect to my resume
+- https://duyet.net/about - Redirect to about me
+- https://duyet.net/blog - Redirect to my blog
+- https://duyet.net/github - Redirect to my GitHub profile
+
+## External Resources
+
+### Personal Links
+- **Blog**: https://blog.duyet.net - Technical blog about data engineering, software development
+- **Resume/CV**: https://cv.duyet.net - Professional resume and experience
+- **MCP Tools**: https://mcp.duyet.net - Model Context Protocol tools and utilities
+
+### Social Media & Professional
+- **GitHub**: https://github.com/duyet - Open source projects and contributions
+- **LinkedIn**: https://linkedin.com/in/duyet - Professional networking and career
+- **X (Twitter)**: https://x.com/_duyet - Tech thoughts and updates
+- **Unsplash**: https://unsplash.com/@_duyet - Photography portfolio
+
+### Projects & Tools
+- **ClickHouse Monitoring**: https://clickhouse-monitoring.vercel.app - Real-time ClickHouse cluster monitoring
+- **Rust Tiếng Việt**: https://rust-tieng-viet.github.io - Vietnamese Rust programming language guide
+- **Insights**: https://insights.duyet.net - Data insights and analytics platform
+
+## Repository
+
+This project is open source and available at: https://github.com/duyet/duyet.net
+
+## About the Author
+
+Duyet Le is a Senior Data Engineer with expertise in building large-scale data platforms, analytics systems, and developer tools. Passionate about open source, data engineering, and sharing knowledge through blogging and speaking.
