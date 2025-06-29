@@ -15,12 +15,21 @@ export const urls: Urls = {
   "/health": { target: "/health", desc: "are you ok?", system: true },
   "/stats": { target: "/stats", desc: "counting stats", system: true },
   "/mini": { target: "/mini", desc: "minipc stats", system: true },
+  "/llms.txt": { target: "/llms.txt", desc: "LLMs.txt", system: true },
 
   "/": "https://duyet.net",
   "/blog": "https://blog.duyet.net",
   "/cv": "https://cv.duyet.net",
   "/about": "https://blog.duyet.net/about",
   "/i": { target: "https://insights.duyet.net", desc: "insights" },
+  "/insights": {
+    target: "https://insights.duyet.net",
+    desc: "data insights platform",
+  },
+  "/mcp": {
+    target: "https://mcp.duyet.net",
+    desc: "Model Context Protocol tools",
+  },
   "/in": { target: "https://linkedin.com/in/duyet", desc: "linkedin" },
   "/rs": {
     target: "https://rust-tieng-viet.github.io",
