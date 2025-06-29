@@ -46,8 +46,11 @@ export class LiveSessionManager {
       ]);
 
       // Update counters
-      const newTotal = Math.max(0, (totalEntry.value || 0) + increment);
-      const newTypeCount = Math.max(0, (typeEntry.value || 0) + increment);
+      const newTotal = Math.max(0, Number(totalEntry.value || 0) + increment);
+      const newTypeCount = Math.max(
+        0,
+        Number(typeEntry.value || 0) + increment,
+      );
 
       await Promise.all([
         this.kv.set(["live_count", "total"], newTotal),
@@ -57,7 +60,7 @@ export class LiveSessionManager {
       if (session.location.country) {
         const newLocationCount = Math.max(
           0,
-          (locationEntry.value || 0) + increment,
+          Number(locationEntry.value || 0) + increment,
         );
         await this.kv.set([
           "live_count",
@@ -152,7 +155,7 @@ export class LiveSessionManager {
 
       for await (const entry of locationEntries) {
         const country = entry.key[2] as string;
-        byLocation[country] = entry.value || 0;
+        byLocation[country] = Number(entry.value || 0);
       }
 
       // Get trend data (last hour in 5-minute buckets)
@@ -166,15 +169,15 @@ export class LiveSessionManager {
           Math.floor(timestamp / (5 * 60 * 1000)),
         ];
         const entry = await this.kv.get<number>(bucketKey);
-        trend.unshift({ timestamp, count: entry.value || 0 });
+        trend.unshift({ timestamp, count: Number(entry.value || 0) });
       }
 
       return {
-        total: Math.max(0, totalEntry.value || 0),
+        total: Math.max(0, Number(totalEntry.value || 0)),
         byType: {
-          [UserType.HUMAN]: Math.max(0, humanEntry.value || 0),
-          [UserType.BOT]: Math.max(0, botEntry.value || 0),
-          [UserType.LLM]: Math.max(0, llmEntry.value || 0),
+          [UserType.HUMAN]: Math.max(0, Number(humanEntry.value || 0)),
+          [UserType.BOT]: Math.max(0, Number(botEntry.value || 0)),
+          [UserType.LLM]: Math.max(0, Number(llmEntry.value || 0)),
         },
         byLocation,
         trend,
