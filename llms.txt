@@ -2,84 +2,21 @@
 
 This is the personal website of Duyet Le, a Senior Data Engineer and technology enthusiast. The website serves as a central hub for Duyet's professional presence, technical projects, and digital resources.
 
-Built with modern web technologies including Deno and Fresh framework, the site demonstrates best practices in web development while providing a gateway to Duyet's various online platforms and projects.
-
-## Key Features
-
-- Personal hub and digital gateway for professional presence
-- Real-time analytics and system monitoring dashboards
-- Mini PC monitoring dashboard (temperature, power consumption, memory usage)
-- Interactive data visualizations and technical demonstrations
-- Modern web architecture showcasing latest technologies
-
-## Tech Stack (Current Site Implementation)
-
-- **Runtime**: Deno 1.x with TypeScript support
-- **Framework**: Fresh 1.7.3 (full-stack web framework with SSR and islands architecture)
-- **UI Library**: Preact 10.22.0 (React-compatible, lightweight)
-- **Styling**: TailwindCSS 3.4.1 (utility-first CSS framework)
-- **Database**: ClickHouse for analytics and redirect tracking
-- **Charts**: ECharts for interactive data visualizations
-- **Storage**: Deno KV for queue management and temporary data
-- **Deployment**: Deno Deploy (serverless edge runtime)
-
-### Deno-Specific Features Used
-- **Fresh Islands**: Client-side interactivity with EChart.tsx components
-- **File-based Routing**: Automatic route generation from file structure
-- **Import Maps**: Modern dependency management without package.json
-- **Built-in TypeScript**: No build step required for TS compilation
-- **Web Standards**: Native fetch, Web APIs, ES modules
-- **Deno KV**: Built-in key-value store for queue processing
-- **Permission System**: Granular security with --allow flags
-
-### Performance Optimizations
-- **Server-Side Rendering (SSR)**: Fast initial page loads
-- **Edge Computing**: Global distribution via Deno Deploy
-- **Static Assets**: Optimized serving of CSS, images, and favicons
-- **Minimal Bundle**: Preact's small footprint vs React
-
-## Usage
-
-Make sure to install Deno: https://deno.land/manual/getting_started/installation
-
-Then start the project:
-
-```bash
-deno task start
-```
-
-This will watch the project directory and restart as necessary.
-
 ## Available Pages & Features
-
-- https://duyet.net/stats - Analytics and statistics dashboard
-- https://duyet.net/mini - Mini PC monitoring and system stats
-- https://duyet.net/cv - Professional resume and experience
-- https://duyet.net/about - Personal information and background
-- https://duyet.net/blog - Technical blog and articles
-- https://duyet.net/github - Open source projects and contributions
-
-## External Resources
 
 ### Personal Links
 - **Blog**: https://blog.duyet.net - Technical blog about data engineering, software development
 - **Resume/CV**: https://cv.duyet.net - Professional resume and experience
+- **Insights**: https://insights.duyet.net - Data insights and analytics platform
 - **MCP Tools**: https://mcp.duyet.net - Model Context Protocol tools and utilities
+- **Rust Tiếng Việt**: https://rust-tieng-viet.github.io - Vietnamese Rust programming language guide
+- **ClickHouse Monitoring**: https://duyet.net/monitor - Real-time ClickHouse cluster monitoring
 
 ### Social Media & Professional
-- **GitHub**: https://github.com/duyet - Open source projects and contributions
-- **LinkedIn**: https://linkedin.com/in/duyet - Professional networking and career
-- **X (Twitter)**: https://x.com/_duyet - Tech thoughts and updates
-- **Unsplash**: https://unsplash.com/@_duyet - Photography portfolio
-
-### Projects & Tools
-- **ClickHouse Monitoring**: https://clickhouse-monitoring.vercel.app - Real-time ClickHouse cluster monitoring
-- **Rust Tiếng Việt**: https://rust-tieng-viet.github.io - Vietnamese Rust programming language guide
-- **Insights**: https://insights.duyet.net - Data insights and analytics platform
-
-## Repository
-
-This project is open source and available at: https://github.com/duyet/duyet.net
+- **GitHub**: https://duyet.net/github - Open source projects and contributions
+- **LinkedIn**: https://duyet.net/in - Professional networking and career
+- **X (Twitter)**: https://duyet.net/x - Tech thoughts and updates
+- **Unsplash**: https://duyet.net/un - Photography portfolio
 
 ## About Duyet Le - Senior Data Engineer
 
@@ -90,35 +27,23 @@ Duyet Le is a Senior Data Engineer and technology enthusiast based in Vietnam, s
 - **Real-time Analytics**: Stream processing, event-driven architectures, and real-time dashboards
 - **ClickHouse Expert**: Deep expertise in ClickHouse database for analytics workloads
 - **Cloud & DevOps**: Kubernetes, Docker, CI/CD, infrastructure as code
+- **LLM Agents**: Developing AI agents, integrating LLMs with your data systems and internal services
 - **Open Source Contributor**: Active in the data engineering and developer tools community
 
 ### Key Technologies
-- **Databases**: ClickHouse, PostgreSQL, Redis, MongoDB
+- **Databases**: ClickHouse, PostgreSQL, Redis
 - **Big Data**: Apache Kafka, Apache Spark, Airflow, dbt
-- **Cloud Platforms**: AWS, GCP, Azure, Kubernetes
-- **Languages**: Python, TypeScript, Go, Rust, SQL
-- **Frameworks**: Fresh/Deno, React, Node.js, FastAPI
+- **LLM Technologies**: LlamaIndex, Qdrant
+- **infrastructure**: Kubernetes
+- **Languages**: Python, TypeScript, Rust, SQL
 
 ### MCP (Model Context Protocol) Integration
 Duyet has built MCP servers that AI systems can connect to for enhanced capabilities:
 - **MCP Server**: https://mcp.duyet.net - AI-accessible tools and utilities
 - **Documentation**: Comprehensive guides for AI integration and data engineering patterns
-- **Live Examples**: Working implementations of MCP protocols for LLM enhancement
-
-### Knowledge Sharing & Resources
-- **Technical Blog**: In-depth articles on data engineering, system design, and technology
-- **Professional CV**: Detailed experience, projects, and technical expertise
-- **Insights Platform**: Data analytics projects and technical insights
-- **Open Source**: 100+ repositories with practical tools and libraries
 
 ### LLM-Friendly Documentation
 Each platform provides structured information for AI systems:
-- **Blog llms.txt**: https://blog.duyet.net/llms.txt - Technical articles and tutorials
-- **CV llms.txt**: https://cv.duyet.net/llms.txt - Professional experience and skills
-- **Insights llms.txt**: https://insights.duyet.net/llms.txt - Data projects and analytics work
-
-### Community & Speaking
-- Conference speaker on data engineering and ClickHouse topics
-- Maintainer of "Rust Tiếng Việt" - Vietnamese Rust programming guide
-- Active contributor to data engineering and developer communities
-- Mentor and technical advisor for startups and engineering teams
+- **Blog**: https://blog.duyet.net/llms.txt - Technical articles and tutorials
+- **CV**: https://cv.duyet.net/llms.txt - Professional experience and skills
+- **MCP Tools**: https://mcp.duyet.net/llms.txt - AI tools and utilities
