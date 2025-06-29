@@ -12,7 +12,7 @@ export function StatsLastUpdatedChart(
   const row = data[0];
 
   return (
-    <div className={"text-gray-600 text-sm"}>
+    <div className="text-gray-600 text-sm">
       <p>
         Last event:
         <code>{row.source}</code> → <code>{row.target}</code>{" "}

@@ -42,7 +42,7 @@ export default async function Page(_req: Request, _ctx: RouteContext) {
       <div>
         <TempHeatmapChart
           temp={tempCPUByDay}
-          title={"CPU AMD Ryzen temperature (°C)"}
+          title="CPU AMD Ryzen temperature (°C)"
         />
         <p className="mt-4">
           Data from k10temp sensor. Each row represents a day, and each square
@@ -53,7 +53,7 @@ export default async function Page(_req: Request, _ctx: RouteContext) {
       <div>
         <TempHeatmapChart
           temp={tempSSDByDay}
-          title={"SSD temperature (°C)"}
+          title="SSD temperature (°C)"
         />
         <p className="mt-4">
         </p>
@@ -62,7 +62,7 @@ export default async function Page(_req: Request, _ctx: RouteContext) {
       <div>
         <TempHeatmapChart
           temp={tempHDDByDay}
-          title={"HDD temperature (°C)"}
+          title="HDD temperature (°C)"
         />
         <p className="mt-4">
         </p>
@@ -71,7 +71,7 @@ export default async function Page(_req: Request, _ctx: RouteContext) {
       <div>
         <WattHeatmapChart
           watts={wattByDay}
-          title={"Power consumption (kWh)"}
+          title="Power consumption (kWh)"
         />
         <KWattByDayChart
           wattByHour={kWhByDay}
