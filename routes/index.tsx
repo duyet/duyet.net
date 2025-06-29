@@ -1,34 +1,4 @@
-import { FreshContext, Handlers, PageProps } from "$fresh/server.ts";
-import { kv } from "@/libs/kv.ts";
-import { LiveSessionManager, LiveStats } from "@/libs/live-sessions.ts";
-import LiveUsersBadge from "@/islands/LiveUsersBadge.tsx";
-
-interface HomePageData {
-  liveStats: LiveStats;
-}
-
-export const handler: Handlers<HomePageData> = {
-  async GET(_req: Request, ctx: FreshContext) {
-    const sessionManager = new LiveSessionManager(kv);
-
-    try {
-      const liveStats = await sessionManager.getLiveStats();
-      return ctx.render({ liveStats });
-    } catch (error) {
-      console.error("Failed to get live stats:", error);
-      return ctx.render({
-        liveStats: {
-          total: 0,
-          byType: { human: 0, bot: 0, llm: 0 },
-          byLocation: {},
-          trend: [],
-        },
-      });
-    }
-  },
-};
-
-export default function Home({ data }: PageProps<HomePageData>) {
+export default function Home() {
   return (
     <div class="px-4 py-6 mx-auto min-h-screen flex bg-slate-50">
       <div class="max-w-screen-md mx-auto flex flex-col items-center justify-center">
@@ -113,6 +83,15 @@ export default function Home({ data }: PageProps<HomePageData>) {
                 <div class="font-medium text-slate-900 text-sm">LLMs.txt</div>
                 <div class="text-xs text-slate-500">AI resources</div>
               </a>
+
+              <a
+                href="/live"
+                class="text-center p-3 bg-white border border-slate-200 rounded-lg hover:border-slate-300 hover:shadow-sm transition-all"
+              >
+                <div class="text-xl mb-1">📡</div>
+                <div class="font-medium text-slate-900 text-sm">Live</div>
+                <div class="text-xs text-slate-500">Real-time users</div>
+              </a>
             </div>
 
             <div class="flex justify-center pt-2">
@@ -126,7 +105,6 @@ export default function Home({ data }: PageProps<HomePageData>) {
           </div>
         </div>
       </div>
-      <LiveUsersBadge initialStats={data.liveStats} />
     </div>
   );
 }
