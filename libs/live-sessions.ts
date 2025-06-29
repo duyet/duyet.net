@@ -27,35 +27,71 @@ export class LiveSessionManager {
     this.kv = kv;
   }
 
-  async createSession(session: LiveSession): Promise<void> {
-    const atomic = this.kv.atomic();
+  private async updateCounters(
+    session: LiveSession,
+    increment: number,
+  ): Promise<void> {
+    try {
+      // Get current counters
+      const [totalEntry, typeEntry, locationEntry] = await Promise.all([
+        this.kv.get<number>(["live_count", "total"]),
+        this.kv.get<number>(["live_count", "by_type", session.userType]),
+        session.location.country
+          ? this.kv.get<number>([
+            "live_count",
+            "by_location",
+            session.location.country,
+          ])
+          : Promise.resolve({ value: 0 }),
+      ]);
 
-    // Store the session with TTL
-    atomic.set(["live_sessions", session.id], session, {
-      expireIn: SESSION_TTL_MS,
-    });
+      // Update counters
+      const newTotal = Math.max(0, (totalEntry.value || 0) + increment);
+      const newTypeCount = Math.max(0, (typeEntry.value || 0) + increment);
 
-    // Update counters atomically
-    atomic.sum(["live_count", "total"], 1n);
-    atomic.sum(["live_count", "by_type", session.userType], 1n);
+      await Promise.all([
+        this.kv.set(["live_count", "total"], newTotal),
+        this.kv.set(["live_count", "by_type", session.userType], newTypeCount),
+      ]);
 
-    if (session.location.country) {
-      atomic.sum(["live_count", "by_location", session.location.country], 1n);
+      if (session.location.country) {
+        const newLocationCount = Math.max(
+          0,
+          (locationEntry.value || 0) + increment,
+        );
+        await this.kv.set([
+          "live_count",
+          "by_location",
+          session.location.country,
+        ], newLocationCount);
+      }
+    } catch (error) {
+      console.error("Failed to update counters:", error);
     }
+  }
 
-    // Track activity for cleanup
-    const activityKey = [
-      "live_activity",
-      Math.floor(session.timestamp / 60000),
-    ];
-    const existingActivity = await this.kv.get<string[]>(activityKey);
-    const sessionIds = existingActivity.value || [];
-    sessionIds.push(session.id);
-    atomic.set(activityKey, sessionIds, { expireIn: ACTIVITY_TTL_MS });
+  async createSession(session: LiveSession): Promise<void> {
+    try {
+      // Store the session with TTL
+      await this.kv.set(["live_sessions", session.id], session, {
+        expireIn: SESSION_TTL_MS,
+      });
 
-    const result = await atomic.commit();
-    if (!result.ok) {
-      throw new Error("Failed to create session");
+      // Update counters separately (Deno Deploy doesn't support atomic.sum)
+      await this.updateCounters(session, 1);
+
+      // Track activity for cleanup
+      const activityKey = [
+        "live_activity",
+        Math.floor(session.timestamp / 60000),
+      ];
+      const existingActivity = await this.kv.get<string[]>(activityKey);
+      const sessionIds = existingActivity.value || [];
+      sessionIds.push(session.id);
+      await this.kv.set(activityKey, sessionIds, { expireIn: ACTIVITY_TTL_MS });
+    } catch (error) {
+      // Silently handle errors in production to avoid breaking the site
+      console.error("Failed to create session:", error);
     }
   }
 
@@ -79,73 +115,84 @@ export class LiveSessionManager {
   }
 
   async removeSession(sessionId: string): Promise<void> {
-    const sessionEntry = await this.kv.get<LiveSession>([
-      "live_sessions",
-      sessionId,
-    ]);
-    if (!sessionEntry.value) return;
+    try {
+      const sessionEntry = await this.kv.get<LiveSession>([
+        "live_sessions",
+        sessionId,
+      ]);
+      if (!sessionEntry.value) return;
 
-    const session = sessionEntry.value;
-    const atomic = this.kv.atomic();
+      const session = sessionEntry.value;
 
-    // Remove the session
-    atomic.delete(["live_sessions", sessionId]);
+      // Remove the session
+      await this.kv.delete(["live_sessions", sessionId]);
 
-    // Update counters atomically
-    atomic.sum(["live_count", "total"], -1n);
-    atomic.sum(["live_count", "by_type", session.userType], -1n);
-
-    if (session.location.country) {
-      atomic.sum(["live_count", "by_location", session.location.country], -1n);
-    }
-
-    const result = await atomic.commit();
-    if (!result.ok) {
-      throw new Error("Failed to remove session");
+      // Update counters separately
+      await this.updateCounters(session, -1);
+    } catch (error) {
+      console.error("Failed to remove session:", error);
     }
   }
 
   async getLiveStats(): Promise<LiveStats> {
-    // Get all counters in parallel
-    const [totalEntry, humanEntry, botEntry, llmEntry] = await Promise.all([
-      this.kv.get<bigint>(["live_count", "total"]),
-      this.kv.get<bigint>(["live_count", "by_type", UserType.HUMAN]),
-      this.kv.get<bigint>(["live_count", "by_type", UserType.BOT]),
-      this.kv.get<bigint>(["live_count", "by_type", UserType.LLM]),
-    ]);
+    try {
+      // Get all counters in parallel
+      const [totalEntry, humanEntry, botEntry, llmEntry] = await Promise.all([
+        this.kv.get<number>(["live_count", "total"]),
+        this.kv.get<number>(["live_count", "by_type", UserType.HUMAN]),
+        this.kv.get<number>(["live_count", "by_type", UserType.BOT]),
+        this.kv.get<number>(["live_count", "by_type", UserType.LLM]),
+      ]);
 
-    // Get location data
-    const locationEntries = this.kv.list<bigint>({
-      prefix: ["live_count", "by_location"],
-    });
-    const byLocation: Record<string, number> = {};
+      // Get location data
+      const locationEntries = this.kv.list<number>({
+        prefix: ["live_count", "by_location"],
+      });
+      const byLocation: Record<string, number> = {};
 
-    for await (const entry of locationEntries) {
-      const country = entry.key[2] as string;
-      byLocation[country] = Number(entry.value);
+      for await (const entry of locationEntries) {
+        const country = entry.key[2] as string;
+        byLocation[country] = entry.value || 0;
+      }
+
+      // Get trend data (last hour in 5-minute buckets)
+      const now = Date.now();
+      const trend: { timestamp: number; count: number }[] = [];
+
+      for (let i = 0; i < 12; i++) {
+        const timestamp = now - (i * 5 * 60 * 1000);
+        const bucketKey = [
+          "live_trend",
+          Math.floor(timestamp / (5 * 60 * 1000)),
+        ];
+        const entry = await this.kv.get<number>(bucketKey);
+        trend.unshift({ timestamp, count: entry.value || 0 });
+      }
+
+      return {
+        total: Math.max(0, totalEntry.value || 0),
+        byType: {
+          [UserType.HUMAN]: Math.max(0, humanEntry.value || 0),
+          [UserType.BOT]: Math.max(0, botEntry.value || 0),
+          [UserType.LLM]: Math.max(0, llmEntry.value || 0),
+        },
+        byLocation,
+        trend,
+      };
+    } catch (error) {
+      console.error("Failed to get live stats:", error);
+      // Return empty stats on error
+      return {
+        total: 0,
+        byType: {
+          [UserType.HUMAN]: 0,
+          [UserType.BOT]: 0,
+          [UserType.LLM]: 0,
+        },
+        byLocation: {},
+        trend: [],
+      };
     }
-
-    // Get trend data (last hour in 5-minute buckets)
-    const now = Date.now();
-    const trend: { timestamp: number; count: number }[] = [];
-
-    for (let i = 0; i < 12; i++) {
-      const timestamp = now - (i * 5 * 60 * 1000);
-      const bucketKey = ["live_trend", Math.floor(timestamp / (5 * 60 * 1000))];
-      const entry = await this.kv.get<number>(bucketKey);
-      trend.unshift({ timestamp, count: entry.value || 0 });
-    }
-
-    return {
-      total: Math.max(0, Number(totalEntry.value || 0n)),
-      byType: {
-        [UserType.HUMAN]: Math.max(0, Number(humanEntry.value || 0n)),
-        [UserType.BOT]: Math.max(0, Number(botEntry.value || 0n)),
-        [UserType.LLM]: Math.max(0, Number(llmEntry.value || 0n)),
-      },
-      byLocation,
-      trend,
-    };
   }
 
   async getAllSessions(): Promise<LiveSession[]> {
