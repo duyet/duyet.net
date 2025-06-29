@@ -8,6 +8,7 @@ import * as $_app from "./routes/_app.tsx";
 import * as $ads_txt from "./routes/ads.txt.ts";
 import * as $health from "./routes/health.ts";
 import * as $index from "./routes/index.tsx";
+import * as $llms_txt from "./routes/llms.txt.ts";
 import * as $ls from "./routes/ls.tsx";
 import * as $mini_layout from "./routes/mini/_layout.tsx";
 import * as $mini_index from "./routes/mini/index.tsx";
@@ -26,6 +27,7 @@ const manifest = {
     "./routes/ads.txt.ts": $ads_txt,
     "./routes/health.ts": $health,
     "./routes/index.tsx": $index,
+    "./routes/llms.txt.ts": $llms_txt,
     "./routes/ls.tsx": $ls,
     "./routes/mini/_layout.tsx": $mini_layout,
     "./routes/mini/index.tsx": $mini_index,
