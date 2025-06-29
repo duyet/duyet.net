@@ -5,9 +5,12 @@
 import * as $_redirect_index from "./routes/[...redirect]/index.ts";
 import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
+import * as $_middleware from "./routes/_middleware.ts";
 import * as $ads_txt from "./routes/ads.txt.ts";
+import * as $api_live_updates from "./routes/api/live-updates.ts";
 import * as $health from "./routes/health.ts";
 import * as $index from "./routes/index.tsx";
+import * as $live_index from "./routes/live/index.tsx";
 import * as $llms_txt from "./routes/llms.txt.ts";
 import * as $ls from "./routes/ls.tsx";
 import * as $mini_layout from "./routes/mini/_layout.tsx";
@@ -16,6 +19,8 @@ import * as $ping from "./routes/ping.ts";
 import * as $robots_txt from "./routes/robots.txt.ts";
 import * as $stats_index from "./routes/stats/index.tsx";
 import * as $EChart from "./islands/EChart.tsx";
+import * as $LiveUpdates from "./islands/LiveUpdates.tsx";
+import * as $LiveUsersBadge from "./islands/LiveUsersBadge.tsx";
 import * as $StatsChart from "./islands/StatsChart.tsx";
 import * as $theme from "./islands/theme.ts";
 import type { Manifest } from "$fresh/server.ts";
@@ -25,9 +30,12 @@ const manifest = {
     "./routes/[...redirect]/index.ts": $_redirect_index,
     "./routes/_404.tsx": $_404,
     "./routes/_app.tsx": $_app,
+    "./routes/_middleware.ts": $_middleware,
     "./routes/ads.txt.ts": $ads_txt,
+    "./routes/api/live-updates.ts": $api_live_updates,
     "./routes/health.ts": $health,
     "./routes/index.tsx": $index,
+    "./routes/live/index.tsx": $live_index,
     "./routes/llms.txt.ts": $llms_txt,
     "./routes/ls.tsx": $ls,
     "./routes/mini/_layout.tsx": $mini_layout,
@@ -38,6 +46,8 @@ const manifest = {
   },
   islands: {
     "./islands/EChart.tsx": $EChart,
+    "./islands/LiveUpdates.tsx": $LiveUpdates,
+    "./islands/LiveUsersBadge.tsx": $LiveUsersBadge,
     "./islands/StatsChart.tsx": $StatsChart,
     "./islands/theme.ts": $theme,
   },
