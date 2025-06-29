@@ -6,11 +6,12 @@ export const handler: Handlers = {
   GET(_req: Request, _ctx: FreshContext) {
     const sessionManager = new LiveSessionManager(kv);
 
+    // Track stream state
+    let isClosed = false;
+
     // Create a Server-Sent Events response
     const stream = new ReadableStream({
       start(controller) {
-        let isClosed = false;
-
         // Send initial data
         const sendUpdate = async () => {
           try {
@@ -23,8 +24,15 @@ export const handler: Handlers = {
               timestamp: Date.now(),
             });
 
+            // Double-check before enqueuing and wrap in try-catch
             if (!isClosed) {
-              controller.enqueue(`data: ${data}\n\n`);
+              try {
+                controller.enqueue(`data: ${data}\n\n`);
+              } catch (enqueueError) {
+                // Stream was closed after our check - mark as closed and stop
+                isClosed = true;
+                console.error("Stream closed during enqueue:", enqueueError);
+              }
             }
           } catch (error) {
             console.error("Failed to send live update:", error);
@@ -49,7 +57,8 @@ export const handler: Handlers = {
         };
       },
       cancel() {
-        // Client disconnected - cleanup is handled in the start function return
+        // Client disconnected - mark as closed
+        isClosed = true;
       },
     });
 
