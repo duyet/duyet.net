@@ -9,15 +9,6 @@ interface LiveUsersBadgeProps {
 export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
   const [stats, setStats] = useState<LiveStats>(initialStats);
 
-  if (stats.total === 0) {
-    return (
-      <LiveUpdates
-        initialStats={initialStats}
-        onUpdate={setStats}
-      />
-    );
-  }
-
   return (
     <>
       <LiveUpdates
@@ -29,7 +20,11 @@ export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
           href="/live"
           className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-3 py-2 shadow-lg flex items-center gap-2 text-sm group hover:shadow-xl transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-600 cursor-pointer"
         >
-          <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse">
+          <div
+            className={`w-2 h-2 rounded-full ${
+              stats.total > 0 ? "bg-green-500 animate-pulse" : "bg-gray-400"
+            }`}
+          >
           </div>
           <span className="font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
             {stats.total} live
