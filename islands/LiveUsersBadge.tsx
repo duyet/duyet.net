@@ -25,10 +25,13 @@ export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
         onUpdate={setStats}
       />
       <div className="fixed bottom-4 right-4 z-50">
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-3 py-2 shadow-lg flex items-center gap-2 text-sm group hover:shadow-xl transition-all duration-200">
+        <a
+          href="/live"
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-full px-3 py-2 shadow-lg flex items-center gap-2 text-sm group hover:shadow-xl transition-all duration-200 hover:border-blue-300 dark:hover:border-blue-600 cursor-pointer"
+        >
           <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse">
           </div>
-          <span className="font-medium text-gray-700 dark:text-gray-300">
+          <span className="font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
             {stats.total} live
           </span>
 
@@ -50,13 +53,16 @@ export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
                   <span>{stats.byType.llm}</span>
                 </div>
               </div>
+              <div className="text-center mt-2 text-blue-300 text-xs">
+                Click to view details
+              </div>
               <div className="absolute top-full left-1/2 transform -translate-x-1/2">
                 <div className="border-4 border-transparent border-t-gray-900">
                 </div>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </div>
     </>
   );
