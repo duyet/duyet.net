@@ -12,13 +12,31 @@ The application maps predefined slugs to specific URLs and performs HTTP 301 red
 - Bot detection and filtering
 - Statistics visualization with interactive charts
 
-## Tech Stack
+## Tech Stack (Current Site Implementation)
 
-- **Runtime**: Deno with TypeScript
-- **Framework**: Fresh (full-stack web framework)
-- **UI**: Preact + TailwindCSS
-- **Database**: ClickHouse for analytics
-- **Deployment**: Deno Deploy
+- **Runtime**: Deno 1.x with TypeScript support
+- **Framework**: Fresh 1.7.3 (full-stack web framework with SSR and islands architecture)
+- **UI Library**: Preact 10.22.0 (React-compatible, lightweight)
+- **Styling**: TailwindCSS 3.4.1 (utility-first CSS framework)
+- **Database**: ClickHouse for analytics and redirect tracking
+- **Charts**: ECharts for interactive data visualizations
+- **Storage**: Deno KV for queue management and temporary data
+- **Deployment**: Deno Deploy (serverless edge runtime)
+
+### Deno-Specific Features Used
+- **Fresh Islands**: Client-side interactivity with EChart.tsx components
+- **File-based Routing**: Automatic route generation from file structure
+- **Import Maps**: Modern dependency management without package.json
+- **Built-in TypeScript**: No build step required for TS compilation
+- **Web Standards**: Native fetch, Web APIs, ES modules
+- **Deno KV**: Built-in key-value store for queue processing
+- **Permission System**: Granular security with --allow flags
+
+### Performance Optimizations
+- **Server-Side Rendering (SSR)**: Fast initial page loads
+- **Edge Computing**: Global distribution via Deno Deploy
+- **Static Assets**: Optimized serving of CSS, images, and favicons
+- **Minimal Bundle**: Preact's small footprint vs React
 
 ## Usage
 
