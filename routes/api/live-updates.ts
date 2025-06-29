@@ -9,9 +9,13 @@ export const handler: Handlers = {
     // Create a Server-Sent Events response
     const stream = new ReadableStream({
       start(controller) {
+        let isClosed = false;
+
         // Send initial data
         const sendUpdate = async () => {
           try {
+            if (isClosed) return;
+
             const stats = await sessionManager.getLiveStats();
             const data = JSON.stringify({
               type: "stats_update",
@@ -19,25 +23,33 @@ export const handler: Handlers = {
               timestamp: Date.now(),
             });
 
-            controller.enqueue(`data: ${data}\n\n`);
+            if (!isClosed) {
+              controller.enqueue(`data: ${data}\n\n`);
+            }
           } catch (error) {
             console.error("Failed to send live update:", error);
+            // Don't rethrow to avoid breaking the stream
           }
         };
 
         // Send initial update
-        sendUpdate();
+        sendUpdate().catch(console.error);
 
         // Set up interval for periodic updates
-        const interval = setInterval(sendUpdate, 10000); // Every 10 seconds
+        const interval = setInterval(() => {
+          if (!isClosed) {
+            sendUpdate().catch(console.error);
+          }
+        }, 10000); // Every 10 seconds
 
         // Clean up when the connection is closed
         return () => {
+          isClosed = true;
           clearInterval(interval);
         };
       },
       cancel() {
-        // Client disconnected
+        // Client disconnected - cleanup is handled in the start function return
       },
     });
 
