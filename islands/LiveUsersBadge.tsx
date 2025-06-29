@@ -1,18 +1,41 @@
-import { useState } from "preact/hooks";
+import { useEffect, useState } from "preact/hooks";
 import { LiveStats } from "@/libs/live-sessions.ts";
 import LiveUpdates from "@/islands/LiveUpdates.tsx";
 
-interface LiveUsersBadgeProps {
-  initialStats: LiveStats;
-}
+const defaultStats: LiveStats = {
+  total: 0,
+  byType: { human: 0, bot: 0, llm: 0 },
+  byLocation: {},
+  trend: [],
+};
 
-export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
-  const [stats, setStats] = useState<LiveStats>(initialStats);
+export default function LiveUsersBadge() {
+  const [stats, setStats] = useState<LiveStats>(defaultStats);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch initial stats from API
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const response = await fetch("/api/live-stats");
+        if (response.ok) {
+          const data = await response.json();
+          setStats(data);
+        }
+      } catch (error) {
+        console.error("Failed to fetch live stats:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   return (
     <>
       <LiveUpdates
-        initialStats={initialStats}
+        initialStats={stats}
         onUpdate={setStats}
       />
       <div className="fixed bottom-4 right-4 z-50">
@@ -22,12 +45,16 @@ export default function LiveUsersBadge({ initialStats }: LiveUsersBadgeProps) {
         >
           <div
             className={`w-2 h-2 rounded-full ${
-              stats.total > 0 ? "bg-green-500 animate-pulse" : "bg-gray-400"
+              loading
+                ? "bg-gray-300 animate-pulse"
+                : stats.total > 0
+                ? "bg-green-500 animate-pulse"
+                : "bg-gray-400"
             }`}
           >
           </div>
           <span className="font-medium text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400">
-            {stats.total} live
+            {loading ? "..." : `${stats.total} live`}
           </span>
 
           {/* Tooltip on hover */}
