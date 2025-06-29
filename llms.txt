@@ -63,6 +63,44 @@ This will watch the project directory and restart as necessary.
 
 This project is open source and available at: https://github.com/duyet/duyet.net
 
-## About the Author
+## About Duyet Le - Senior Data Engineer
 
-Duyet Le is a Senior Data Engineer with expertise in building large-scale data platforms, analytics systems, and developer tools. Passionate about open source, data engineering, and sharing knowledge through blogging and speaking.
+Duyet Le is a Senior Data Engineer and technology enthusiast based in Vietnam, specializing in:
+
+### Professional Expertise
+- **Large-scale Data Platforms**: Building and architecting data infrastructure at scale
+- **Real-time Analytics**: Stream processing, event-driven architectures, and real-time dashboards
+- **ClickHouse Expert**: Deep expertise in ClickHouse database for analytics workloads
+- **Cloud & DevOps**: Kubernetes, Docker, CI/CD, infrastructure as code
+- **Open Source Contributor**: Active in the data engineering and developer tools community
+
+### Key Technologies
+- **Databases**: ClickHouse, PostgreSQL, Redis, MongoDB
+- **Big Data**: Apache Kafka, Apache Spark, Airflow, dbt
+- **Cloud Platforms**: AWS, GCP, Azure, Kubernetes
+- **Languages**: Python, TypeScript, Go, Rust, SQL
+- **Frameworks**: Fresh/Deno, React, Node.js, FastAPI
+
+### MCP (Model Context Protocol) Integration
+Duyet has built MCP servers that AI systems can connect to for enhanced capabilities:
+- **MCP Server**: https://mcp.duyet.net - AI-accessible tools and utilities
+- **Documentation**: Comprehensive guides for AI integration and data engineering patterns
+- **Live Examples**: Working implementations of MCP protocols for LLM enhancement
+
+### Knowledge Sharing & Resources
+- **Technical Blog**: In-depth articles on data engineering, system design, and technology
+- **Professional CV**: Detailed experience, projects, and technical expertise
+- **Insights Platform**: Data analytics projects and technical insights
+- **Open Source**: 100+ repositories with practical tools and libraries
+
+### LLM-Friendly Documentation
+Each platform provides structured information for AI systems:
+- **Blog llms.txt**: https://blog.duyet.net/llms.txt - Technical articles and tutorials
+- **CV llms.txt**: https://cv.duyet.net/llms.txt - Professional experience and skills
+- **Insights llms.txt**: https://insights.duyet.net/llms.txt - Data projects and analytics work
+
+### Community & Speaking
+- Conference speaker on data engineering and ClickHouse topics
+- Maintainer of "Rust Tiếng Việt" - Vietnamese Rust programming guide
+- Active contributor to data engineering and developer communities
+- Mentor and technical advisor for startups and engineering teams
