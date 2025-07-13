@@ -7,6 +7,7 @@ import * as $_404 from "./routes/_404.tsx";
 import * as $_app from "./routes/_app.tsx";
 import * as $_middleware from "./routes/_middleware.ts";
 import * as $ads_txt from "./routes/ads.txt.ts";
+import * as $api_live_stats from "./routes/api/live-stats.ts";
 import * as $api_live_updates from "./routes/api/live-updates.ts";
 import * as $health from "./routes/health.ts";
 import * as $index from "./routes/index.tsx";
@@ -32,6 +33,7 @@ const manifest = {
     "./routes/_app.tsx": $_app,
     "./routes/_middleware.ts": $_middleware,
     "./routes/ads.txt.ts": $ads_txt,
+    "./routes/api/live-stats.ts": $api_live_stats,
     "./routes/api/live-updates.ts": $api_live_updates,
     "./routes/health.ts": $health,
     "./routes/index.tsx": $index,

@@ -14,17 +14,8 @@
     "hooks:install": "deno run --allow-read=deno.json,.git/hooks/ --allow-write=.git/hooks/ jsr:@hongminhee/deno-task-hooks",
     "hooks:pre-commit": "deno fmt && deno lint && deno task test:coverage"
   },
-  "lint": {
-    "rules": {
-      "tags": [
-        "fresh",
-        "recommended"
-      ]
-    }
-  },
-  "exclude": [
-    "**/_fresh/*"
-  ],
+  "lint": { "rules": { "tags": ["fresh", "recommended"] } },
+  "exclude": ["**/_fresh/*"],
   "imports": {
     "@/": "./",
     "@/libs/": "./libs/",
@@ -43,16 +34,11 @@
     "std/": "https://deno.land/std@0.216.0/",
     "user_agent": "https://deno.land/std@0.224.0/http/user_agent.ts"
   },
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "jsxImportSource": "preact"
-  },
+  "compilerOptions": { "jsx": "react-jsx", "jsxImportSource": "preact" },
   "nodeModulesDir": "auto",
   "deploy": {
     "project": "f8774b17-2661-4164-a3de-8bc09b219374",
-    "exclude": [
-      "**/node_modules"
-    ],
+    "exclude": ["**/node_modules"],
     "include": [],
     "entrypoint": "main.ts"
   }
