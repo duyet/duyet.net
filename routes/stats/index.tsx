@@ -9,16 +9,6 @@ import {
   query as q2,
   type RedirectionLastUpdatedStats,
 } from "@/libs/get_stats_last_updated.ts";
-import { Header } from "@/components/ui/header.tsx";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card.tsx";
-import { Badge } from "@/components/ui/badge.tsx";
-import { Button } from "@/components/ui/button.tsx";
 
 export default async function Page() {
   const redirects = await clickhouseQuery<RedirectionStats>(q1);
@@ -31,112 +21,67 @@ export default async function Page() {
   return (
     <>
       <Head>
-        <title>Analytics Dashboard - duyet.net</title>
+        <title>Analytics - duyet.net</title>
       </Head>
       <div className="min-h-screen bg-background">
-        <Header />
-        <main className="container mx-auto px-4 py-8">
-          <div className="max-w-6xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <div>
-                <h1 className="text-3xl font-bold tracking-tight mb-2">
-                  Analytics Dashboard
-                </h1>
-                <p className="text-muted-foreground">
-                  URL redirection metrics and traffic insights
-                </p>
-              </div>
-              <Button variant="outline" asChild>
-                <a href="/">
-                  ← Back to home
+        <header className="border-b">
+          <div className="container mx-auto px-6 py-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <img src="/logo.svg" className="h-6 w-6" alt="duyet.net" />
+                <a
+                  href="/"
+                  className="font-medium hover:text-primary transition-colors"
+                >
+                  duyet
                 </a>
-              </Button>
+              </div>
+              <nav className="hidden md:flex gap-6">
+                <a
+                  href="/blog"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Blog
+                </a>
+                <a
+                  href="/cv"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Resume
+                </a>
+                <a href="/stats" className="text-foreground">Analytics</a>
+                <a
+                  href="/mini"
+                  className="text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Mini PC
+                </a>
+              </nav>
+            </div>
+          </div>
+        </header>
+
+        <main className="container mx-auto px-6 py-16">
+          <div className="max-w-6xl mx-auto space-y-12">
+            <div className="text-center">
+              <h1 className="text-4xl font-light mb-4">Analytics</h1>
+              <div className="flex justify-center gap-8 text-sm text-muted-foreground">
+                <span>{totalClicks.toLocaleString()} clicks</span>
+                <span>{totalUrls} URLs</span>
+                <span>{recentActivity.length} recent</span>
+              </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Total Clicks
-                  </CardTitle>
-                  <div className="h-4 w-4 text-muted-foreground">
-                    📊
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {totalClicks.toLocaleString()}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Across all URLs
-                  </p>
-                </CardContent>
-              </Card>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <div className="border rounded-lg p-6">
+                <h2 className="text-lg font-medium mb-6">Activity</h2>
+                <StatsLastUpdatedChart data={lastUpdated.data} />
+              </div>
 
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Active URLs
-                  </CardTitle>
-                  <div className="h-4 w-4 text-muted-foreground">
-                    🔗
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">{totalUrls}</div>
-                  <p className="text-xs text-muted-foreground">
-                    Total redirects configured
-                  </p>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                  <CardTitle className="text-sm font-medium">
-                    Recent Activity
-                  </CardTitle>
-                  <div className="h-4 w-4 text-muted-foreground">
-                    ⚡
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="text-2xl font-bold">
-                    {recentActivity.length}
-                  </div>
-                  <p className="text-xs text-muted-foreground">
-                    Last 5 interactions
-                  </p>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-              <Card>
-                <CardHeader>
-                  <CardTitle className="flex items-center gap-2">
-                    Activity Timeline
-                    <Badge variant="secondary">Live</Badge>
-                  </CardTitle>
-                  <CardDescription>
-                    Recent redirection activity and user interactions
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <StatsLastUpdatedChart data={lastUpdated.data} />
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardHeader>
-                  <CardTitle>Traffic Overview</CardTitle>
-                  <CardDescription>
-                    URL performance metrics and click distribution
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <StatsChart validatedUrls={urls} data={redirects.data} />
-                </CardContent>
-              </Card>
+              <div className="border rounded-lg p-6">
+                <h2 className="text-lg font-medium mb-6">Traffic</h2>
+                <StatsChart validatedUrls={urls} data={redirects.data} />
+              </div>
             </div>
           </div>
         </main>
