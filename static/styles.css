@@ -4,24 +4,25 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background-hex: #f0eee6;
+    --background: 42 18% 93%;
     --foreground: 0 0% 9%;
-    --card: 0 0% 100%;
+    --card: 42 18% 93%;
     --card-foreground: 0 0% 9%;
-    --popover: 0 0% 100%;
+    --popover: 42 18% 93%;
     --popover-foreground: 0 0% 9%;
     --primary: 14 100% 68%;
     --primary-foreground: 0 0% 100%;
-    --secondary: 0 0% 96%;
+    --secondary: 42 12% 88%;
     --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96%;
+    --muted: 42 12% 88%;
     --muted-foreground: 0 0% 45%;
-    --accent: 0 0% 96%;
+    --accent: 42 12% 88%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 90%;
-    --input: 0 0% 90%;
+    --border: 42 10% 85%;
+    --input: 42 10% 85%;
     --ring: 14 100% 68%;
     --radius: 0.5rem;
   }
@@ -55,6 +56,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    font-family: "Styrene A", Arial, sans-serif;
+    background-color: #f0eee6;
   }
 }
 

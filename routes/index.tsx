@@ -1,43 +1,6 @@
 export default function Home() {
   return (
-    <div className="min-h-screen bg-background">
-      <header className="border-b">
-        <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <img src="/logo.svg" className="h-6 w-6" alt="duyet.net" />
-              <span className="font-medium">duyet</span>
-            </div>
-            <nav className="hidden md:flex gap-6">
-              <a
-                href="/blog"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Blog
-              </a>
-              <a
-                href="/cv"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Resume
-              </a>
-              <a
-                href="/stats"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Analytics
-              </a>
-              <a
-                href="/mini"
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                Mini PC
-              </a>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+    <div className="min-h-screen">
       <main className="container mx-auto px-6 py-16">
         <div className="max-w-3xl mx-auto text-center mb-16">
           <h1 className="text-5xl font-light mb-6">Data Engineering</h1>
@@ -49,67 +12,115 @@ export default function Home() {
         <div className="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-4">
           <a
             href="/blog"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">📝</div>
-            <div className="font-medium">Blog</div>
+            <img
+              src="https://images.unsplash.com/photo-1455390582262-044cdead277a?w=400&h=300&fit=crop&crop=center"
+              alt="Blog"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Blog</div>
+            </div>
           </a>
 
           <a
             href="/cv"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">👨‍💻</div>
-            <div className="font-medium">Resume</div>
+            <img
+              src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&crop=center"
+              alt="Resume"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Resume</div>
+            </div>
           </a>
 
           <a
             href="/insights"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">📈</div>
-            <div className="font-medium">Insights</div>
+            <img
+              src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=300&fit=crop&crop=center"
+              alt="Insights"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Insights</div>
+            </div>
           </a>
 
           <a
             href="/mcp"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">🔗</div>
-            <div className="font-medium">MCP</div>
+            <img
+              src="https://images.unsplash.com/photo-1518373714866-3f1478910cc0?w=400&h=300&fit=crop&crop=center"
+              alt="MCP"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">MCP</div>
+            </div>
           </a>
 
           <a
             href="/stats"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">📊</div>
-            <div className="font-medium">Analytics</div>
+            <img
+              src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=400&h=300&fit=crop&crop=center"
+              alt="Analytics"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Analytics</div>
+            </div>
           </a>
 
           <a
             href="/mini"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">🖥️</div>
-            <div className="font-medium">Mini PC</div>
+            <img
+              src="https://images.unsplash.com/photo-1587831990711-23ca6441447b?w=400&h=300&fit=crop&crop=center"
+              alt="Mini PC"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Mini PC</div>
+            </div>
           </a>
 
           <a
             href="/llms.txt"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors"
           >
-            <div className="text-2xl mb-2">🤖</div>
-            <div className="font-medium">LLMs.txt</div>
+            <img
+              src="https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&h=300&fit=crop&crop=center"
+              alt="LLMs.txt"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">LLMs.txt</div>
+            </div>
           </a>
 
           <a
             href="/live"
-            className="group p-6 rounded-lg border hover:border-primary transition-colors relative"
+            className="group rounded-lg overflow-hidden border hover:border-primary transition-colors relative"
           >
-            <div className="text-2xl mb-2">📡</div>
-            <div className="font-medium">Live</div>
-            <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full">
+            <img
+              src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&crop=center"
+              alt="Live"
+              className="w-full h-32 object-cover"
+            />
+            <div className="p-4">
+              <div className="font-medium">Live</div>
+              <div className="absolute top-2 right-2 w-2 h-2 bg-primary rounded-full">
+              </div>
             </div>
           </a>
         </div>
