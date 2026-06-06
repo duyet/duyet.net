@@ -149,11 +149,11 @@ export function getLocationFromRequest(
   const cfCity = headers.get("cf-city");
 
   if (cfCountry) {
-    return {
+    return Promise.resolve({
       country: cfCountry,
       region: cfRegion || undefined,
       city: cfCity || undefined,
-    };
+    });
   }
 
   // Try other common headers
@@ -162,14 +162,14 @@ export function getLocationFromRequest(
   const xCity = headers.get("x-city");
 
   if (xCountry) {
-    return {
+    return Promise.resolve({
       country: xCountry,
       region: xRegion || undefined,
       city: xCity || undefined,
-    };
+    });
   }
 
   // For now, return empty location data
   // In production, you could integrate with a GeoIP service
-  return {};
+  return Promise.resolve({});
 }

@@ -5,6 +5,14 @@ export { RedirectService } from "@/src/domains/redirect/redirect.service.ts";
 export { AnalyticsService } from "@/src/domains/analytics/analytics.service.ts";
 export { getSlug, isBot } from "@/src/shared/utils/validation.ts";
 
+// UI utilities
+export function cn(
+  ...classes: (string | undefined | null | false | { toString(): string })[]
+): string {
+  return classes.filter(Boolean).map((cls) => cls?.toString()).filter(Boolean)
+    .join(" ");
+}
+
 import type { FreshContext } from "$fresh/server.ts";
 import { RedirectService } from "@/src/domains/redirect/redirect.service.ts";
 import { AnalyticsService } from "@/src/domains/analytics/analytics.service.ts";
